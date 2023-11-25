@@ -1,5 +1,5 @@
 ---
-title: "EDE_Final_Project"
+title: "EDE_Time_Series_ERCOT"
 output: html_document
 date: "2023-11-25"
 ---
