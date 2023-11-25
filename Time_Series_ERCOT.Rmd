@@ -4,8 +4,8 @@ output: html_document
 date: "2023-11-25"
 ---
 
-The null hypothesis: Electricity load in ERCOT remained the same from 2010 to 2023. 
-Alternative hypothesis: Electricity load in ERCOT has changed from 2010 to 2023. 
+The null hypothesis: Electricity load in ERCOT remained the same from 2010 to 2022. 
+Alternative hypothesis: Electricity load in ERCOT has changed from 2010 to 2022. 
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -47,14 +47,13 @@ x2021<- read_excel("ERCOT_Source_Data/Native_Load_2021.xlsx") %>% rename(Hour_En
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
 x2022<- read_excel("ERCOT_Source_Data/Native_Load_2022.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2023<- read_excel("ERCOT_Source_Data/Native_Load_2023.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
-  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
 
 # Merge the data frames based on a common column
-ercot <- bind_rows(x2010, x2011, x2012, x2013, x2014, x2015, x2016, x2017, x2018, x2019, x2020, x2021, x2022, x2023)
+ercot <- bind_rows(x2010, x2011, x2012, x2013, x2014, x2015, x2016, x2017, x2018, x2019, x2020, x2021, x2022)
 head(ercot)
 
 ```
+
 ```{r}
 
 # Plot hourly data 
@@ -67,7 +66,7 @@ head(ercot_load)
 ggplot(ercot_load, aes(x = Hour_Ending, y = ERCOT)) +
   geom_line(color = "blue") +
   geom_smooth(method = "lm") +
-  ggtitle('Hourly Electricity Load in ERCOT from 2010 to 2023') + 
+  ggtitle('Hourly Electricity Load in ERCOT from 2010 to 2022') + 
   labs(x = "", y = "Load (MW)")
 ```
 
@@ -117,7 +116,7 @@ head(ercot_load_daily)
 graph1 <- ggplot(ercot_load_monthly, aes(x = NewDate, y = Mean_Load)) +
   geom_line(color = "blue") +
   geom_smooth(method = "lm") +
-  ggtitle('Monthly Electricity Load in ERCOT from 2010 to 2023') + 
+  ggtitle('Monthly Electricity Load in ERCOT from 2010 to 2022') + 
   labs(x = "", y = "Average Monhtly Load (MW)")
 
 graph1
@@ -129,7 +128,7 @@ graph1
 graph2 <- ggplot(ercot_load_daily, aes(x = NewDate, y = Mean_Load)) +
   geom_line(color = "blue") +
   geom_smooth(method = "lm") +
-  ggtitle('Daily Electricity Load in ERCOT from 2010 to 2023') + 
+  ggtitle('Daily Electricity Load in ERCOT from 2010 to 2022') + 
   labs(x = "", y = "Average Daily Load (MW)")
 
 graph2 
