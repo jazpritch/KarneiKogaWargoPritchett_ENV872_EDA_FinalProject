@@ -144,6 +144,21 @@ ggplot(ercot_load, aes(x = Hour_Ending, y = ERCOT)) +
   ggtitle('Hourly Electricity Load in ERCOT from 2010 to 2022') + 
   labs(x = "", y = "Load (MW)")
 ```
+```{r}
+#Aggregate data by year
+
+ercot_load_yearly <- ercot_load %>%
+  mutate(
+    year = year(Hour_Ending)
+  ) %>%
+  group_by(year) %>%
+  summarise(
+    Mean_Load = mean(ERCOT, na.rm = TRUE)
+  ) %>% 
+  drop_na()
+
+ercot_load_yearly
+```
 
 ```{r}
 #Aggregate data by month
@@ -412,7 +427,15 @@ The null hypothesis: There is no change in electricity load with price in PJM fr
 
 Alternative hypothesis: Electricity load in PJM has changed in relation to price from years...
 
-```{r PJM Load v. Price}
+```{r Load in Linear Model Data}
+
+ercot_linear_model_data <- read.csv("Data/Raw/ERCOT_Source_Data/ERCOTLinearModelData.csv")
+ercot_linear_model_data <- left_join(ercot_linear_model_data, ercot_load_yearly)
+
+ercot_linear_model_data
+```
+
+```{r ERCOT Load v. Price}
 
 ```
 
