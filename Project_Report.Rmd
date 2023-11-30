@@ -38,31 +38,31 @@ getwd()
 ## Load in data 
 ```{r ERCOT}
 # Read the CSV files
-x2010<- read_excel("ERCOT_Source_Data/2010_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
+x2010<- read_excel("Data/Raw/ERCOT_Source_Data/2010_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2011<- read_excel("ERCOT_Source_Data/2011_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
+x2011<- read_excel("Data/Raw/ERCOT_Source_Data/2011_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2012<- read_excel("ERCOT_Source_Data/2012_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
+x2012<- read_excel("Data/Raw/ERCOT_Source_Data/2012_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2013<- read_excel("ERCOT_Source_Data/2013_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
+x2013<- read_excel("Data/Raw/ERCOT_Source_Data/2013_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2014<- read_excel("ERCOT_Source_Data/2014_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
+x2014<- read_excel("Data/Raw/ERCOT_Source_Data/2014_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2015<- read_excel("ERCOT_Source_Data/native_load_2015.xls") %>% rename(Hour_Ending = Hour_End) %>%
+x2015<- read_excel("Data/Raw/ERCOT_Source_Data/native_load_2015.xls") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2016<- read_excel("ERCOT_Source_Data/native_Load_2016.xlsx") %>% rename(Hour_Ending = Hour_End) %>%
+x2016<- read_excel("Data/Raw/ERCOT_Source_Data/native_Load_2016.xlsx") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2017<- read_excel("ERCOT_Source_Data/native_Load_2017.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
+x2017<- read_excel("Data/Raw/ERCOT_Source_Data/native_Load_2017.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2018<- read_excel("ERCOT_Source_Data/Native_Load_2018.xlsx") %>% rename(Hour_Ending = "HourEnding") %>%
+x2018<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2018.xlsx") %>% rename(Hour_Ending = "HourEnding") %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2019<- read_excel("ERCOT_Source_Data/Native_Load_2019.xlsx") %>% rename(Hour_Ending = "HourEnding") %>%
+x2019<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2019.xlsx") %>% rename(Hour_Ending = "HourEnding") %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2020<- read_excel("ERCOT_Source_Data/Native_Load_2020.xlsx") %>% rename(Hour_Ending = "HourEnding") %>%
+x2020<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2020.xlsx") %>% rename(Hour_Ending = "HourEnding") %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2021<- read_excel("ERCOT_Source_Data/Native_Load_2021.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
+x2021<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2021.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2022<- read_excel("ERCOT_Source_Data/Native_Load_2022.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
+x2022<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2022.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
 
 # Merge the data frames based on a common column
@@ -74,43 +74,43 @@ ercot_load <- ercot %>%
 
 ```{r load data PJM, include=FALSE}
 # Read the CSV files
-PJM_2010<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2010.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+PJM_2010<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2010.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
 PJM_2010 <- PJM_2010[, c(2, 7)]
-PJM_2011<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2011.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+PJM_2011<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2011.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
 PJM_2011 <- PJM_2011[, c(2, 7)]
-PJM_2012<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2012.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+PJM_2012<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2012.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
 PJM_2012 <- PJM_2012[, c(2, 7)]
-PJM_2013<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2013.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+PJM_2013<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2013.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
 PJM_2013 <- PJM_2013[, c(2, 7)]
-PJM_2014<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2014.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+PJM_2014<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2014.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
 PJM_2014 <- PJM_2014[, c(2, 7)]
-PJM_2015<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2015.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+PJM_2015<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2015.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
 PJM_2015 <- PJM_2015[, c(2, 7)]
-PJM_2016<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2016.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+PJM_2016<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2016.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
 PJM_2016 <- PJM_2016[, c(2, 7)]
-PJM_2017<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2017.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+PJM_2017<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2017.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
 PJM_2017 <- PJM_2017[, c(2, 7)]
-PJM_2018<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2018.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+PJM_2018<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2018.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
 PJM_2018 <- PJM_2018[, c(2, 7)]
-PJM_2019<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2019.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+PJM_2019<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2019.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
 PJM_2019 <- PJM_2019[, c(2, 7)]
-PJM_2020<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2020.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+PJM_2020<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2020.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
 PJM_2020 <- PJM_2020[, c(2, 7)]
-PJM_2021<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2021.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+PJM_2021<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2021.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
 PJM_2021 <- PJM_2021[, c(2, 7)]
-PJM_2022<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2022.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+PJM_2022<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2022.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
 PJM_2022 <- PJM_2022[, c(2, 7)]
 
