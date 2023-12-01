@@ -427,6 +427,8 @@ The null hypothesis: There is no change in electricity load with price in PJM fr
 
 Alternative hypothesis: Electricity load in PJM has changed in relation to price from years...
 
+Real-time pricing reflects the actual market conditions, while day-ahead pricing provides insight into the expected future market conditions. Both pricing data used to understand regression analysis. 
+
 ```{r PJM Load v. Price}
 
 ```
