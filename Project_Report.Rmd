@@ -427,10 +427,102 @@ The null hypothesis: There is no change in electricity load with price in PJM fr
 
 Alternative hypothesis: Electricity load in PJM has changed in relation to price from years...
 
-Real-time pricing reflects the actual market conditions, while day-ahead pricing provides insight into the expected future market conditions. Both pricing data used to understand regression analysis. 
+Real-time pricing reflects the actual market conditions, while day-ahead pricing provides insight into the expected future market conditions. Both pricing data used to understand regression analysis. Market Performance Clearing Price ($/MWh)used reflecting the cost of the movement of load in response to regulation signals, which is related to the performance of the resource in meeting the demand.
 
-```{r PJM Load v. Price}
+```{r Load in price data Real-time}
 
+# Read the CSV files
+rt_2012<- read_csv("Data/Raw/PJM_Source_Data/rt_2012.csv") %>% rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+rt_2013<- read_csv("Data/Raw/PJM_Source_Data/rt_2013.csv") %>% rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+rt_2014<- read_csv("Data/Raw/PJM_Source_Data/rt_2014.csv") %>% rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+rt_2015<- read_csv("Data/Raw/PJM_Source_Data/rt_2015.csv") %>% rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+rt_2016<- read_csv("Data/Raw/PJM_Source_Data/rt_2016.csv") %>% rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+rt_2017<- read_csv("Data/Raw/PJM_Source_Data/rt_2017.csv") %>% rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+rt_2018<- read_csv("Data/Raw/PJM_Source_Data/rt_2018.csv") %>% rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+rt_2019<- read_csv("Data/Raw/PJM_Source_Data/rt_2019.csv") %>% rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+rt_2020<- read_csv("Data/Raw/PJM_Source_Data/rt_2020.csv")%>% rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+rt_2021<- read_csv("Data/Raw/PJM_Source_Data/rt_2021.csv") %>% rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+rt_2022<- read_csv("Data/Raw/PJM_Source_Data/rt_2022.csv") %>% rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+
+#Merge the data frames based on a common column
+rt_load <- bind_rows(rt_2012, rt_2013, rt_2014, rt_2015, rt_2016, rt_2017, rt_2018, rt_2019, rt_2020, rt_2021, PJM_2022)
+```
+
+```{r Load in price data Day-ahead}
+# Read the CSV files
+dasr_2010<- read_csv("Data/Raw/PJM_Source_Data/dasr_2010.csv") %>% rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+dasr_2011<- read_csv("Data/Raw/PJM_Source_Data/dasr_2011.csv") %>% rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+dasr_2012<- read_csv("Data/Raw/PJM_Source_Data/dasr_2012.csv") %>% rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+dasr_2013<- read_csv("Data/Raw/PJM_Source_Data/dasr_2013.csv") %>% rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+dasr_2014<- read_csv("Data/Raw/PJM_Source_Data/dasr_2014.csv") %>% rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+dasr_2015<- read_csv("Data/Raw/PJM_Source_Data/dasr_2015.csv") %>% rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+dasr_2016<- read_csv("Data/Raw/PJM_Source_Data/dasr_2016.csv") %>% rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+dasr_2017<- read_csv("Data/Raw/PJM_Source_Data/dasr_2017.csv") %>% rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+dasr_2018<- read_csv("Data/Raw/PJM_Source_Data/dasr_2018.csv") %>% rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+dasr_2019<- read_csv("Data/Raw/PJM_Source_Data/dasr_2019.csv") %>% rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+dasr_2020<- read_csv("Data/Raw/PJM_Source_Data/dasr_2020.csv")%>% rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+dasr_2021<- read_csv("Data/Raw/PJM_Source_Data/dasr_2021.csv") %>% rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+dasr_2022<- read_csv("Data/Raw/PJM_Source_Data/dasr_2022.csv") %>% rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+
+#Merge the data frames based on a common column
+dasr_load <- bind_rows(dasr_2010, dasr_2011, dasr_2012, dasr_2013, dasr_2014, dasr_2015, dasr_2016, dasr_2017, dasr_2018, dasr_2019, dasr_2020, dasr_2021, dasr_2022)
+```
+
+
+```{r PJM Load v. Price Real time}
+
+ggplot(rt_load, aes(x= Load_MW, y= Price)) + geom_point() + geom_smooth(method = "1m",
+se = FALSE) + labs(x= "Load (MW/h)", y = "Price ($)")
+
+```
+```{r PJM Load v. Price Day ahead}
+ggplot(dasr_load, aes(x= Load_MW, y= Price)) + geom_point() + geom_smooth(method = "1m",
+se = FALSE) + labs(x= "Load (MW/h)", y = "Price ($)")
+```
+```{r}
+rt.regression <- lm(
+data = rt_load,
+Price ~ Load_MW)
+summary(rt.regression)
+```
+```{r}
+cor.test(rt_load$Price, rt_load$Load_MW)
+```
+
+```{r}
+dasr.regression <- lm(
+data = dasr_load,
+Price ~ Load_MW)
+summary(dasr.regression)
+```
+```{r}
+cor.test(dasr_load$Price, dasr_load$Load_MW)
 ```
 
 
