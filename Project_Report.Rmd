@@ -497,12 +497,12 @@ dasr_load <- bind_rows(dasr_2010, dasr_2011, dasr_2012, dasr_2013, dasr_2014, da
 
 ```{r PJM Load v. Price Real time}
 
-ggplot(rt_load, aes(x= Load_MW, y= Price)) + geom_point() + geom_smooth(method = "1m",
+ggplot(rt_load, aes(x= Load_MW, y= Price)) + geom_point() + geom_smooth(method = "lm",
 se = FALSE) + labs(x= "Load (MW/h)", y = "Price ($)")
 
 ```
 ```{r PJM Load v. Price Day ahead}
-ggplot(dasr_load, aes(x= Load_MW, y= Price)) + geom_point() + geom_smooth(method = "1m",
+ggplot(dasr_load, aes(x= Load_MW, y= Price)) + geom_point() + geom_smooth(method = "lm",
 se = FALSE) + labs(x= "Load (MW/h)", y = "Price ($)")
 ```
 ```{r}
