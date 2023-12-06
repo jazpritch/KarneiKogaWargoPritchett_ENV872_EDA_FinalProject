@@ -452,8 +452,7 @@ growth_PJM <- diff(PJM_load_monthly_ts) / stats::lag(PJM_load_monthly_ts)
 
 ```
 
-#Regression Analysis 
-## PJM Simple Linear Regression
+#Regression Analysis \## PJM Simple Linear Regression
 
 Simple Linear Regression
 
