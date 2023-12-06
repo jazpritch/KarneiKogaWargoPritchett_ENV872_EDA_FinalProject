@@ -614,11 +614,10 @@ cor.test(dasr_load$Price, dasr_load$Load_MW)
 ercot_linear_model_data <- read.csv("Data/Raw/ERCOT_Source_Data/ERCOTLinearModelData.csv")
 ercot_linear_model_data <- left_join(ercot_linear_model_data, ercot_load_yearly) %>% drop_na()
 
-ercot_linear_model_data$percent_renew <- stringr::str_extract(ercot_linear_model_data$percent_renew, "^.{4}") %>% 
-  as.numeric()
-
 ercot_linear_model_data$percent_minority <- ercot_linear_model_data$percent_minority %>% 
   as.numeric()
+
+ercot_linear_model_data$med_income <- as.numeric(gsub(",","",ercot_linear_model_data$med_income))
 
 ercot_linear_model_data$population <- as.numeric(gsub(",","",ercot_linear_model_data$population))
 
@@ -635,8 +634,8 @@ corrplot(ercot.tot.Corr, method = 'ellipse')
 
 ```{r ERCOT AIC}
 ercot.AIC.total <- lm(data = ercot_linear_model_data_totprice, 
-                       Mean_Load ~ average_price_tot + population + percent_renew + med_income +
-                        percent_minority)
+                       Mean_Load ~ average_price_tot + population + percent_renew +
+                        med_income + percent_minority)
 
 step(ercot.AIC.total)
 ```
