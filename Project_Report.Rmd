@@ -452,7 +452,8 @@ growth_PJM <- diff(PJM_load_monthly_ts) / stats::lag(PJM_load_monthly_ts)
 
 ```
 
-#Regression Analysis ##PJM Simple Linear Regression
+#Regression Analysis 
+## PJM Simple Linear Regression
 
 Simple Linear Regression
 
@@ -607,7 +608,7 @@ summary(dasr.regression)
 cor.test(dasr_load$Price, dasr_load$Load_MW)
 ```
 
-##ERCOT Multiple Linear Regression
+## ERCOT Multiple Linear Regression
 
 ```{r Load in ERCOT Linear Model Data}
 
