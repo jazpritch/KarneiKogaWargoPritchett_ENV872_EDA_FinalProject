@@ -622,8 +622,7 @@ cor.test(dasr_load$Price, dasr_load$Load_MW)
 ```{r Load in Linear Model Data}
 
 ercot_linear_model_data <- read.csv("Data/Raw/ERCOT_Source_Data/ERCOTLinearModelData.csv")
-ercot_linear_model_data <- left_join(ercot_linear_model_data, ercot_load_yearly) %>% 
-  drop_na()
+ercot_linear_model_data <- left_join(ercot_linear_model_data, ercot_load_yearly) %>% drop_na()
 
 ercot_linear_model_data$percent_renew <- stringr::str_extract(ercot_linear_model_data$percent_renew, "^.{4}") %>% 
   as.numeric()
