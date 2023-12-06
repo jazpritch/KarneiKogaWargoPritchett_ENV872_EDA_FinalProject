@@ -632,6 +632,14 @@ ercot.tot.Corr <- cor(ercot_linear_model_data_totprice)
 corrplot(ercot.tot.Corr, method = 'ellipse')
 ```
 
+```{r}
+ercot.total <- lm(data = ercot_linear_model_data_totprice, 
+                       Mean_Load ~ average_price_tot + population + percent_renew +
+                        med_income + percent_minority)
+
+summary(ercot.total)
+```
+
 ```{r ERCOT AIC}
 ercot.AIC.total <- lm(data = ercot_linear_model_data_totprice, 
                        Mean_Load ~ average_price_tot + population + percent_renew +
@@ -639,6 +647,13 @@ ercot.AIC.total <- lm(data = ercot_linear_model_data_totprice,
 
 step(ercot.AIC.total)
 ```
+
+| Variables                                                              | AIC Value |
+|------------------------------------------------------------------------|-----------|
+| Mean_Load + population + percent_renew + med_income + percent_minority | 178       |
+| average_price_tot + population + percent_renew + med_income            | 176.04    |
+| average_price_tot + percent_renew + med_income                         | 174.26    |
+| average_price_tot + percent_renew                                      | 173.58    |
 
 ```{r ERCOT Regression Summary}
 ercot.totalavg.regression <- lm(data = ercot_linear_model_data_totprice, 
