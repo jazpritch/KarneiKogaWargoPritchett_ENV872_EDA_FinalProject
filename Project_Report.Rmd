@@ -16,27 +16,23 @@ library(readxl)
 library(lubridate)
 library(trend)
 library(stats)
+library(corrplot)
+
 getwd()
 ```
 
 ```{r setup theme}
 # Set your ggplot theme
+mytheme <- theme_gray()+
+  theme(plot.title = element_text(size = 16, hjust= 0),
+        axis.title = element_text(size = 13),
+        legend.position = 'right')
+
+theme_set(mytheme)
 ```
 
-```{r load data ERCOT}
-# Load your datasets
-library(tidyverse)
-library(here)
-library(dplyr)
-#install.packages("readxl")
-library(readxl)
-library(lubridate)
-library(trend)
-library(stats)
-library(corrplot)
-getwd()
-```
-## Load in data 
+## Load in data
+
 ```{r ERCOT}
 # Read the CSV files
 x2010<- read_excel("Data/Raw/ERCOT_Source_Data/2010_ercot_hourly_load_data.xls") %>% 
@@ -159,19 +155,16 @@ PJM_load <- bind_rows(PJM_2010, PJM_2011, PJM_2012, PJM_2013, PJM_2014, PJM_2015
 
 # Rationale and Research Questions
 
-
-
 \newpage
 
 # Dataset Information
 
-
-
 \newpage
 
-# Exploratory Analysis 
+# Exploratory Analysis
 
-Distribution of ERCOT hourly load data, as well as aggregated by day and month. 
+Distribution of ERCOT hourly load data, as well as aggregated by day and month.
+
 ```{r}
 # Plot hourly data 
 
@@ -263,8 +256,7 @@ graph2 <- ggplot(ercot_load_daily, aes(x = NewDate, y = Mean_Load)) +
 graph2 
 ```
 
-
-Distribution of PJM hourly load data, as well as aggregated by day and month. 
+Distribution of PJM hourly load data, as well as aggregated by day and month.
 
 ```{r}
 # Plot hourly data 
@@ -337,7 +329,7 @@ PJMgraph_daily <- ggplot(PJM_load_daily, aes(x = NewDate, y = Mean_Load)) +
 PJMgraph_daily
 ```
 
-Using a boxplot to compare electricity load distribution between ERCOT versus PJM. 
+Using a boxplot to compare electricity load distribution between ERCOT versus PJM.
 
 ```{r Boxplot}
 boxplot(ercot_load, PJM_load, names = c("ERCOT", "PJM"), xlab = "Operator", ylab = "Load Distribution", main = "Electricity Load Distribution in ERCOT v. PJM 2010-2022")
@@ -345,9 +337,7 @@ boxplot(ercot_load, PJM_load, names = c("ERCOT", "PJM"), xlab = "Operator", ylab
 
 \newpage
 
-#Time Series Analysis 
-The null hypothesis: Electricity load in ERCOT remained the same from 2010 to 2022. 
-Alternative hypothesis: Electricity load in ERCOT has changed from 2010 to 2022. 
+#Time Series Analysis The null hypothesis: Electricity load in ERCOT remained the same from 2010 to 2022. Alternative hypothesis: Electricity load in ERCOT has changed from 2010 to 2022.
 
 ```{r}
 #Generate ts dataframes 
@@ -380,8 +370,7 @@ monthly_load_trend <- Kendall::SeasonalMannKendall(ercot_load_monthly_ts)
 summary(monthly_load_trend)
 ```
 
-The seasonal Mann-Kendall is the most appropriate test because it is designed to analyze seasonal, non-parametric data, and there is a clear seasonal trend in our data. All other tests we learned about could only be used for non-seasonal data. A positive score (361963) and tau (0.341) indicate an increasing trend in the time series data. The p-value smaller than 0.05 allows us to reject the null hypothesis. Therefore, we can conclude that electricity demand has changed over time in ERCOT. 
-
+The seasonal Mann-Kendall is the most appropriate test because it is designed to analyze seasonal, non-parametric data, and there is a clear seasonal trend in our data. All other tests we learned about could only be used for non-seasonal data. A positive score (361963) and tau (0.341) indicate an increasing trend in the time series data. The p-value smaller than 0.05 allows us to reject the null hypothesis. Therefore, we can conclude that electricity demand has changed over time in ERCOT.
 
 ```{r}
 # Extract seasonal component from the time series 
@@ -397,12 +386,12 @@ monthly_load_trend_deseason <- Kendall::MannKendall(monthly_decomposed_deseasone
 summary(monthly_load_trend_deseason)
 
 ```
-Based on the results of the Mann Kendall test, we are able to reject the null hypothesis (p<0.05) and identify an increasing trend in the data (tau=0.34, score=4339158). Hence, the load in ERCOT has indeed changed over time; it was not simply a seasonal change. A p-value <0.05  in the seasonal Mann Kendall test also led us to the same conclusion. 
+
+Based on the results of the Mann Kendall test, we are able to reject the null hypothesis (p\<0.05) and identify an increasing trend in the data (tau=0.34, score=4339158). Hence, the load in ERCOT has indeed changed over time; it was not simply a seasonal change. A p-value \<0.05 in the seasonal Mann Kendall test also led us to the same conclusion.
 
 \newpage
 
-The null hypothesis: Electricity load in PJM remained the same from 2010 to 2022. 
-Alternative hypothesis: Electricity load in PJM has changed from 2010 to 2022. 
+The null hypothesis: Electricity load in PJM remained the same from 2010 to 2022. Alternative hypothesis: Electricity load in PJM has changed from 2010 to 2022.
 
 ```{r}
 #Generate ts dataframes 
@@ -429,13 +418,13 @@ plot(daily_decomposed_PJM)
 monthly_decomposed_PJM <- stl(PJM_load_monthly_ts, s.window="periodic")
 plot(monthly_decomposed_PJM)
 ```
+
 ```{r}
 monthly_load_trend_PJM <- Kendall::SeasonalMannKendall(PJM_load_monthly_ts)
 summary(monthly_load_trend_PJM)
 ```
 
-The seasonal Mann-Kendall is the most appropriate test because it is designed to analyze seasonal, non-parametric data, and there is a clear seasonal trend in our data. All other tests we learned about could only be used for non-seasonal data. A positive score (82902071) and tau (0.0681) indicate an increasing trend in the time series data. The p-value smaller than 0.05 allows us to reject the null hypothesis. Therefore, we can conclude that electricity demand has changed over time in PJM. 
-
+The seasonal Mann-Kendall is the most appropriate test because it is designed to analyze seasonal, non-parametric data, and there is a clear seasonal trend in our data. All other tests we learned about could only be used for non-seasonal data. A positive score (82902071) and tau (0.0681) indicate an increasing trend in the time series data. The p-value smaller than 0.05 allows us to reject the null hypothesis. Therefore, we can conclude that electricity demand has changed over time in PJM.
 
 ```{r}
 # Extract seasonal component from the time series 
@@ -451,7 +440,8 @@ monthly_load_trend_deseason_PJM <- Kendall::MannKendall(monthly_decomposed_desea
 summary(monthly_load_trend_deseason_PJM)
 
 ```
-Mann Kendall test rejects the null hypothesis, which indicates that there is an increasing trend in the data (tau=0.0687, score=11896706048). This means that PJM load has changed over time from 2010 to 2022 without seasonality components. A p-value <0.05  in the seasonal Mann Kendall test also led us to the same conclusion. 
+
+Mann Kendall test rejects the null hypothesis, which indicates that there is an increasing trend in the data (tau=0.0687, score=11896706048). This means that PJM load has changed over time from 2010 to 2022 without seasonality components. A p-value \<0.05 in the seasonal Mann Kendall test also led us to the same conclusion.
 
 ```{r}
 growth_PJM <- diff(PJM_load_monthly_ts) / stats::lag(PJM_load_monthly_ts)
@@ -462,7 +452,7 @@ growth_PJM <- diff(PJM_load_monthly_ts) / stats::lag(PJM_load_monthly_ts)
 
 ```
 
-#Regression Analysis
+#Regression Analysis ##PJM Simple Linear Regression
 
 Simple Linear Regression
 
@@ -470,7 +460,7 @@ The null hypothesis: There is no change in electricity load with price in PJM fr
 
 Alternative hypothesis: Electricity load in PJM has changed in relation to price from years...
 
-Real-time pricing reflects the actual market conditions, while day-ahead pricing provides insight into the expected future market conditions. Both pricing data used to understand regression analysis. Market Performance Clearing Price ($/MWh)used reflecting the cost of the movement of load in response to regulation signals, which is related to the performance of the resource in meeting the demand.
+Real-time pricing reflects the actual market conditions, while day-ahead pricing provides insight into the expected future market conditions. Both pricing data used to understand regression analysis. Market Performance Clearing Price (\$/MWh)used reflecting the cost of the movement of load in response to regulation signals, which is related to the performance of the resource in meeting the demand.
 
 ```{r Load in price data Real-time}
 
@@ -583,7 +573,6 @@ dasr_2022<- read_csv("Data/Raw/PJM_Source_Data/dasr_2022.csv") %>%
 dasr_load <- bind_rows(dasr_2010, dasr_2011, dasr_2012, dasr_2013, dasr_2014, dasr_2015, dasr_2016, dasr_2017, dasr_2018, dasr_2019, dasr_2020, dasr_2021, dasr_2022)
 ```
 
-
 ```{r PJM Load v. Price Real time}
 
 ggplot(rt_load, aes(x= Load_MW, y= Price)) + 
@@ -618,8 +607,9 @@ summary(dasr.regression)
 cor.test(dasr_load$Price, dasr_load$Load_MW)
 ```
 
+##ERCOT Multiple Linear Regression
 
-```{r Load in Linear Model Data}
+```{r Load in ERCOT Linear Model Data}
 
 ercot_linear_model_data <- read.csv("Data/Raw/ERCOT_Source_Data/ERCOTLinearModelData.csv")
 ercot_linear_model_data <- left_join(ercot_linear_model_data, ercot_load_yearly) %>% drop_na()
@@ -635,31 +625,15 @@ ercot_linear_model_data$population <- as.numeric(gsub(",","",ercot_linear_model_
 ercot_linear_model_data
 ```
 
-```{r}
-ercot_linear_model_data_resprice <- ercot_linear_model_data %>% 
-  select(-c(average_price_com, average_price_ind, average_price_tot))
-
+```{r ERCOT corrplot}
 ercot_linear_model_data_totprice <- ercot_linear_model_data %>% 
   select(-c(average_price_com, average_price_ind, average_price_res))
-```
 
-```{r}
-ercot.res.Corr <- cor(ercot_linear_model_data_resprice)
-corrplot(ercot.res.Corr, method = 'ellipse')
-```
-```{r}
-ercot.AIC.res <- lm(data = ercot_linear_model_data_resprice, 
-                       Mean_Load ~ average_price_res + population + percent_renew + med_income +
-                        percent_minority)
-
-step(ercot.AIC.res)
-```
-
-```{r}
 ercot.tot.Corr <- cor(ercot_linear_model_data_totprice)
 corrplot(ercot.tot.Corr, method = 'ellipse')
 ```
-```{r}
+
+```{r ERCOT AIC}
 ercot.AIC.total <- lm(data = ercot_linear_model_data_totprice, 
                        Mean_Load ~ average_price_tot + population + percent_renew + med_income +
                         percent_minority)
@@ -667,16 +641,7 @@ ercot.AIC.total <- lm(data = ercot_linear_model_data_totprice,
 step(ercot.AIC.total)
 ```
 
-```{r Residential Price}
-
-ercot.residential.regression <- lm(data = ercot_linear_model_data_resprice, 
-                       Mean_Load ~ average_price_res + percent_renew)
-
-summary(ercot.residential.regression)
-
-```
-
-```{r}
+```{r ERCOT Regression Summary}
 ercot.totalavg.regression <- lm(data = ercot_linear_model_data_totprice, 
                        Mean_Load ~ average_price_tot + percent_renew)
 
@@ -684,17 +649,18 @@ summary(ercot.totalavg.regression)
 
 ```
 
-
-
-
-
+```{r ERCOT Residuals Plots}
+par(mfrow = c(2,2), mar=c(4,4,4,4))
+plot(ercot.totalavg.regression)
+par(mfrow = c(1,1))
+```
 
 \newpage
 
 # Summary and Conclusions
 
-
 \newpage
 
 # References
-<add references here if relevant, otherwise delete this section> 
+
+\<add references here if relevant, otherwise delete this section\>
