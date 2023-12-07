@@ -365,31 +365,31 @@ display: none;
 2010 to 2022. Alternative hypothesis: Electricity load in ERCOT has
 changed from 2010 to 2022.</p>
 <pre class="r"><code># Read the CSV files
-x2010&lt;- read_excel(&quot;ERCOT_Source_Data/2010_ercot_hourly_load_data.xls&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
+x2010&lt;- read_excel(&quot;Data/Raw/ERCOT_Source_Data/2010_ercot_hourly_load_data.xls&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = &quot;%m/%d/%Y&quot;))
-x2011&lt;- read_excel(&quot;ERCOT_Source_Data/2011_ercot_hourly_load_data.xls&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
+x2011&lt;- read_excel(&quot;Data/Raw/ERCOT_Source_Data/2011_ercot_hourly_load_data.xls&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = &quot;%m/%d/%Y&quot;))
-x2012&lt;- read_excel(&quot;ERCOT_Source_Data/2012_ercot_hourly_load_data.xls&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
+x2012&lt;- read_excel(&quot;Data/Raw/ERCOT_Source_Data/2012_ercot_hourly_load_data.xls&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = &quot;%m/%d/%Y&quot;))
-x2013&lt;- read_excel(&quot;ERCOT_Source_Data/2013_ercot_hourly_load_data.xls&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
+x2013&lt;- read_excel(&quot;Data/Raw/ERCOT_Source_Data/2013_ercot_hourly_load_data.xls&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = &quot;%m/%d/%Y&quot;))
-x2014&lt;- read_excel(&quot;ERCOT_Source_Data/2014_ercot_hourly_load_data.xls&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
+x2014&lt;- read_excel(&quot;Data/Raw/ERCOT_Source_Data/2014_ercot_hourly_load_data.xls&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = &quot;%m/%d/%Y&quot;))
-x2015&lt;- read_excel(&quot;ERCOT_Source_Data/native_load_2015.xls&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
+x2015&lt;- read_excel(&quot;Data/Raw/ERCOT_Source_Data/native_load_2015.xls&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = &quot;%m/%d/%Y&quot;))
-x2016&lt;- read_excel(&quot;ERCOT_Source_Data/native_Load_2016.xlsx&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
+x2016&lt;- read_excel(&quot;Data/Raw/ERCOT_Source_Data/native_Load_2016.xlsx&quot;) %&gt;% rename(Hour_Ending = Hour_End) %&gt;%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = &quot;%m/%d/%Y&quot;))
-x2017&lt;- read_excel(&quot;ERCOT_Source_Data/native_Load_2017.xlsx&quot;) %&gt;% rename(Hour_Ending = &quot;Hour Ending&quot;) %&gt;%
+x2017&lt;- read_excel(&quot;Data/Raw/ERCOT_Source_Data/native_Load_2017.xlsx&quot;) %&gt;% rename(Hour_Ending = &quot;Hour Ending&quot;) %&gt;%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = &quot;%m/%d/%Y&quot;))
-x2018&lt;- read_excel(&quot;ERCOT_Source_Data/Native_Load_2018.xlsx&quot;) %&gt;% rename(Hour_Ending = &quot;HourEnding&quot;) %&gt;%
+x2018&lt;- read_excel(&quot;Data/Raw/ERCOT_Source_Data/Native_Load_2018.xlsx&quot;) %&gt;% rename(Hour_Ending = &quot;HourEnding&quot;) %&gt;%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = &quot;%m/%d/%Y&quot;))
-x2019&lt;- read_excel(&quot;ERCOT_Source_Data/Native_Load_2019.xlsx&quot;) %&gt;% rename(Hour_Ending = &quot;HourEnding&quot;) %&gt;%
+x2019&lt;- read_excel(&quot;Data/Raw/ERCOT_Source_Data/Native_Load_2019.xlsx&quot;) %&gt;% rename(Hour_Ending = &quot;HourEnding&quot;) %&gt;%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = &quot;%m/%d/%Y&quot;))
-x2020&lt;- read_excel(&quot;ERCOT_Source_Data/Native_Load_2020.xlsx&quot;) %&gt;% rename(Hour_Ending = &quot;HourEnding&quot;) %&gt;%
+x2020&lt;- read_excel(&quot;Data/Raw/ERCOT_Source_Data/Native_Load_2020.xlsx&quot;) %&gt;% rename(Hour_Ending = &quot;HourEnding&quot;) %&gt;%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = &quot;%m/%d/%Y&quot;))
-x2021&lt;- read_excel(&quot;ERCOT_Source_Data/Native_Load_2021.xlsx&quot;) %&gt;% rename(Hour_Ending = &quot;Hour Ending&quot;) %&gt;%
+x2021&lt;- read_excel(&quot;Data/Raw/ERCOT_Source_Data/Native_Load_2021.xlsx&quot;) %&gt;% rename(Hour_Ending = &quot;Hour Ending&quot;) %&gt;%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = &quot;%m/%d/%Y&quot;))
-x2022&lt;- read_excel(&quot;ERCOT_Source_Data/Native_Load_2022.xlsx&quot;) %&gt;% rename(Hour_Ending = &quot;Hour Ending&quot;) %&gt;%
+x2022&lt;- read_excel(&quot;Data/Raw/ERCOT_Source_Data/Native_Load_2022.xlsx&quot;) %&gt;% rename(Hour_Ending = &quot;Hour Ending&quot;) %&gt;%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = &quot;%m/%d/%Y&quot;))
 
 # Merge the data frames based on a common column
@@ -558,6 +558,78 @@ data (tau=0.34, score=4339158). Hence, the load in ERCOT has indeed
 changed over time; it was not simply a seasonal change. A p-value
 &lt;0.05 in the seasonal Mann Kendall test also led us to the same
 conclusion.</p>
+<pre class="r"><code># Aggregate data by year
+ercot_load_annual &lt;- ercot_load %&gt;%
+  mutate(
+    Year = year(Hour_Ending)) %&gt;%
+  group_by(Year) %&gt;%
+  summarise(
+    Mean_Load = mean(ERCOT, na.rm = TRUE)
+  )
+
+ercot_load_annual</code></pre>
+<pre><code>## # A tibble: 14 × 2
+##     Year Mean_Load
+##    &lt;dbl&gt;     &lt;dbl&gt;
+##  1  2010    36336.
+##  2  2011    38127.
+##  3  2012    37000.
+##  4  2013    37869.
+##  5  2014    38828.
+##  6  2015    39669.
+##  7  2016    40006.
+##  8  2017    40782.
+##  9  2018    42949.
+## 10  2019    43818.
+## 11  2020    43463.
+## 12  2021    44829.
+## 13  2022    49074.
+## 14    NA    42314.</code></pre>
+<pre class="r"><code># Remove year 2023 as it is incomplete
+ercot_load_annual &lt;- subset(ercot_load_annual, Year != &quot;N/A&quot;)
+ercot_load_annual</code></pre>
+<pre><code>## # A tibble: 13 × 2
+##     Year Mean_Load
+##    &lt;dbl&gt;     &lt;dbl&gt;
+##  1  2010    36336.
+##  2  2011    38127.
+##  3  2012    37000.
+##  4  2013    37869.
+##  5  2014    38828.
+##  6  2015    39669.
+##  7  2016    40006.
+##  8  2017    40782.
+##  9  2018    42949.
+## 10  2019    43818.
+## 11  2020    43463.
+## 12  2021    44829.
+## 13  2022    49074.</code></pre>
+<pre class="r"><code># Calculate annual rate of growth 
+
+ercot_load_annual &lt;- ercot_load_annual %&gt;%
+  mutate(Growth_Rate_Percent= (Mean_Load / lag(Mean_Load) - 1) * 100)
+
+ercot_load_annual</code></pre>
+<pre><code>## # A tibble: 13 × 3
+##     Year Mean_Load Growth_Rate_Percent
+##    &lt;dbl&gt;     &lt;dbl&gt;               &lt;dbl&gt;
+##  1  2010    36336.              NA    
+##  2  2011    38127.               4.93 
+##  3  2012    37000.              -2.96 
+##  4  2013    37869.               2.35 
+##  5  2014    38828.               2.53 
+##  6  2015    39669.               2.17 
+##  7  2016    40006.               0.850
+##  8  2017    40782.               1.94 
+##  9  2018    42949.               5.31 
+## 10  2019    43818.               2.02 
+## 11  2020    43463.              -0.810
+## 12  2021    44829.               3.14 
+## 13  2022    49074.               9.47</code></pre>
+<pre class="r"><code># Calculate total average annual load growth 
+total_mean_growth &lt;- mean(ercot_load_annual$Growth_Rate_Percent, na.rm = TRUE)
+total_mean_growth </code></pre>
+<pre><code>## [1] 2.579185</code></pre>
 
 
 

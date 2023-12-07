@@ -1,11 +1,11 @@
 ---
-title: "EDE_Time_Series_ERCOT"
+title: "EDE_Time_Series_PJM"
 output: html_document
 date: "2023-11-25"
 ---
 
 The null hypothesis: Electricity load in PJM remained the same from 2010 to 2022. 
-Alternative hypothesis: Electricity load in ERCOT has changed from 2010 to 2022. 
+Alternative hypothesis: Electricity load in PJM has changed from 2010 to 2022. 
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -217,4 +217,5 @@ pjm_load_annual
 # Calculate total average annual load growth 
 total_mean_growth <- mean(pjm_load_annual$Growth_Rate_Percent, na.rm = TRUE)
 total_mean_growth 
+
 ```

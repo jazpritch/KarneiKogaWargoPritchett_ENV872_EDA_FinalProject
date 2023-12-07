@@ -213,6 +213,7 @@ ercot_load_annual
 ```{r}
 # Calculate total average annual load growth 
 total_mean_growth <- mean(ercot_load_annual$Growth_Rate_Percent, na.rm = TRUE)
-total_mean_growth 
+total_mean_growth  
+
 ```
 
