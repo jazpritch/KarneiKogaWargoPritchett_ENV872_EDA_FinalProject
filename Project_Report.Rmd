@@ -452,7 +452,9 @@ growth_PJM <- diff(PJM_load_monthly_ts) / stats::lag(PJM_load_monthly_ts)
 
 ```
 
-#Regression Analysis \## PJM Simple Linear Regression
+# Regression Analysis
+
+## PJM Simple Linear Regression
 
 Simple Linear Regression
 
@@ -621,13 +623,13 @@ ercot_linear_model_data$med_income <- as.numeric(gsub(",","",ercot_linear_model_
 
 ercot_linear_model_data$population <- as.numeric(gsub(",","",ercot_linear_model_data$population))
 
-ercot_linear_model_data
-```
-
-```{r ERCOT corrplot}
 ercot_linear_model_data_totprice <- ercot_linear_model_data %>% 
   select(-c(average_price_com, average_price_ind, average_price_res))
 
+ercot_linear_model_data_totprice
+```
+
+```{r ERCOT corrplot}
 ercot.tot.Corr <- cor(ercot_linear_model_data_totprice)
 corrplot(ercot.tot.Corr, method = 'ellipse')
 ```
@@ -649,7 +651,7 @@ step(ercot.AIC.total)
 ```
 
 | Variables                                                              | AIC Value |
-|------------------------------------------------------------------------|-----------|
+|-------------------------------------------|-----------------------------|
 | Mean_Load + population + percent_renew + med_income + percent_minority | 178       |
 | average_price_tot + population + percent_renew + med_income            | 176.04    |
 | average_price_tot + percent_renew + med_income                         | 174.26    |
@@ -663,9 +665,9 @@ summary(ercot.totalavg.regression)
 
 ```
 
-| Variable      | Coefficients | p-value |
-|---------------|--------------|---------|
-| Intercept     | 15,132.37    | 0.02242 |
+|      Variable | Coefficients | p-value |
+|--------------:|--------------|---------|
+|     Intercept | 15,132.37    | 0.0224  |
 | average_price | 1,976.77     | 0.0083  |
 | percent_renew | 358.75       | 0.0001  |
 
