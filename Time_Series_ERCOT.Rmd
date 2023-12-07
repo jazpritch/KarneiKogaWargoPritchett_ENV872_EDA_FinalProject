@@ -183,3 +183,36 @@ summary(monthly_load_trend_deseason)
 ```
 Based on the results of the Mann Kendall test, we are able to reject the null hypothesis (p<0.05) and identify an increasing trend in the data (tau=0.34, score=4339158). Hence, the load in ERCOT has indeed changed over time; it was not simply a seasonal change. A p-value <0.05  in the seasonal Mann Kendall test also led us to the same conclusion. 
 
+```{r}
+# Aggregate data by year
+ercot_load_annual <- ercot_load %>%
+  mutate(
+    Year = year(Hour_Ending)) %>%
+  group_by(Year) %>%
+  summarise(
+    Mean_Load = mean(ERCOT, na.rm = TRUE)
+  )
+
+ercot_load_annual
+
+# Remove year 2023 as it is incomplete
+ercot_load_annual <- subset(ercot_load_annual, Year != "N/A")
+ercot_load_annual
+
+```
+```{r}
+# Calculate annual rate of growth 
+
+ercot_load_annual <- ercot_load_annual %>%
+  mutate(Growth_Rate_Percent= (Mean_Load / lag(Mean_Load) - 1) * 100)
+
+ercot_load_annual
+```
+
+
+```{r}
+# Calculate total average annual load growth 
+total_mean_growth <- mean(ercot_load_annual$Growth_Rate_Percent, na.rm = TRUE)
+total_mean_growth 
+```
+
