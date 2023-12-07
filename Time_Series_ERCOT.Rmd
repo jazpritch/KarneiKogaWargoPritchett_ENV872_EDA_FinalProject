@@ -21,31 +21,31 @@ getwd()
 
 ```{r}
 # Read the CSV files
-x2010<- read_excel("ERCOT_Source_Data/2010_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
+x2010<- read_excel("Data/Raw/ERCOT_Source_Data/2010_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2011<- read_excel("ERCOT_Source_Data/2011_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
+x2011<- read_excel("Data/Raw/ERCOT_Source_Data/2011_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2012<- read_excel("ERCOT_Source_Data/2012_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
+x2012<- read_excel("Data/Raw/ERCOT_Source_Data/2012_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2013<- read_excel("ERCOT_Source_Data/2013_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
+x2013<- read_excel("Data/Raw/ERCOT_Source_Data/2013_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2014<- read_excel("ERCOT_Source_Data/2014_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
+x2014<- read_excel("Data/Raw/ERCOT_Source_Data/2014_ercot_hourly_load_data.xls") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2015<- read_excel("ERCOT_Source_Data/native_load_2015.xls") %>% rename(Hour_Ending = Hour_End) %>%
+x2015<- read_excel("Data/Raw/ERCOT_Source_Data/native_load_2015.xls") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2016<- read_excel("ERCOT_Source_Data/native_Load_2016.xlsx") %>% rename(Hour_Ending = Hour_End) %>%
+x2016<- read_excel("Data/Raw/ERCOT_Source_Data/native_Load_2016.xlsx") %>% rename(Hour_Ending = Hour_End) %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2017<- read_excel("ERCOT_Source_Data/native_Load_2017.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
+x2017<- read_excel("Data/Raw/ERCOT_Source_Data/native_Load_2017.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2018<- read_excel("ERCOT_Source_Data/Native_Load_2018.xlsx") %>% rename(Hour_Ending = "HourEnding") %>%
+x2018<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2018.xlsx") %>% rename(Hour_Ending = "HourEnding") %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2019<- read_excel("ERCOT_Source_Data/Native_Load_2019.xlsx") %>% rename(Hour_Ending = "HourEnding") %>%
+x2019<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2019.xlsx") %>% rename(Hour_Ending = "HourEnding") %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2020<- read_excel("ERCOT_Source_Data/Native_Load_2020.xlsx") %>% rename(Hour_Ending = "HourEnding") %>%
+x2020<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2020.xlsx") %>% rename(Hour_Ending = "HourEnding") %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2021<- read_excel("ERCOT_Source_Data/Native_Load_2021.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
+x2021<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2021.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
-x2022<- read_excel("ERCOT_Source_Data/Native_Load_2022.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
+x2022<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2022.xlsx") %>% rename(Hour_Ending = "Hour Ending") %>%
   mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
 
 # Merge the data frames based on a common column
