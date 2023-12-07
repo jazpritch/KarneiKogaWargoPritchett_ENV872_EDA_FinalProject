@@ -201,6 +201,7 @@ pjm_load_annual <- PJM_load %>%
   )
 
 pjm_load_annual
+
 ```
 
 ```{r}

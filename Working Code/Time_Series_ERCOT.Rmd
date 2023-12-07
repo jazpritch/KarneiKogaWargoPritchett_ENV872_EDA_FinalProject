@@ -17,6 +17,7 @@ library(lubridate)
 library(trend)
 setwd("/Users/hannakarnei/Desktop/EDA/EDE_Final_Project")
 getwd()
+
 ```
 
 ```{r}
