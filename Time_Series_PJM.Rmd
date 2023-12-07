@@ -1,0 +1,220 @@
+---
+title: "EDE_Time_Series_ERCOT"
+output: html_document
+date: "2023-11-25"
+---
+
+The null hypothesis: Electricity load in PJM remained the same from 2010 to 2022. 
+Alternative hypothesis: Electricity load in ERCOT has changed from 2010 to 2022. 
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(here)
+library(dplyr)
+#install.packages("readxl")
+library(readxl)
+library(lubridate)
+library(trend)
+library(stats)
+getwd()
+setwd("/Users/hannakarnei/Desktop/EDA/EDE_Final_Project")
+getwd()
+```
+
+```{r}
+# Read the CSV files
+PJM_2010<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2010.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2010 <- PJM_2010[, c(2, 7)]
+PJM_2011<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2011.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2011 <- PJM_2011[, c(2, 7)]
+PJM_2012<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2012.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2012 <- PJM_2012[, c(2, 7)]
+PJM_2013<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2013.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2013 <- PJM_2013[, c(2, 7)]
+PJM_2014<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2014.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2014 <- PJM_2014[, c(2, 7)]
+PJM_2015<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2015.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2015 <- PJM_2015[, c(2, 7)]
+PJM_2016<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2016.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2016 <- PJM_2016[, c(2, 7)]
+PJM_2017<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2017.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2017 <- PJM_2017[, c(2, 7)]
+PJM_2018<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2018.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2018 <- PJM_2018[, c(2, 7)]
+PJM_2019<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2019.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2019 <- PJM_2019[, c(2, 7)]
+PJM_2020<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2020.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2020 <- PJM_2020[, c(2, 7)]
+PJM_2021<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2021.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2021 <- PJM_2021[, c(2, 7)]
+PJM_2022<- read_csv("PJM_Source_Data/PJM_MeteredHourlyLoad_2022.csv") %>% rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2022 <- PJM_2022[, c(2, 7)]
+
+# # Merge the data frames based on a common column
+PJM_load <- bind_rows(PJM_2010, PJM_2011, PJM_2012, PJM_2013, PJM_2014, PJM_2015, PJM_2016, PJM_2017, PJM_2018, PJM_2019, PJM_2020, PJM_2021, PJM_2022)
+head(PJM_load)
+
+```
+
+```{r}
+
+# Plot hourly data 
+
+ggplot(PJM_load, aes(x = Date, y = Load_MW)) +
+  geom_line(color = "black") +
+  geom_smooth(method = "lm") +
+  ggtitle('Hourly Electricity Load in PJM from 2010 to 2022') + 
+  labs(x = "", y = "Load (MW)")
+```
+
+```{r}
+#Aggregate data by month
+
+PJM_load_monthly <- PJM_load %>%
+  mutate(
+    Year = year(Date),
+    Month = month(Date)
+  ) %>%
+  group_by(Year, Month) %>%
+  summarise(
+    Mean_Load = mean(Load_MW, na.rm = TRUE)
+  )
+
+PJM_load_monthly$NewDate <- 
+  as.Date(paste(PJM_load_monthly$Year, PJM_load_monthly$Month, "01", sep = "-"))
+
+head(PJM_load_monthly)
+
+#Aggregate data by day 
+
+PJM_load_daily<- PJM_load %>%
+  mutate(
+    Year = year(Date),
+    Month = month(Date),
+    Day = day(Date)
+  ) %>%
+  group_by(Year, Month, Day) %>%
+  summarise(
+    Mean_Load = mean(Load_MW, na.rm = TRUE)
+  )
+
+PJM_load_daily$NewDate <- 
+  as.Date(paste(PJM_load_daily$Year, PJM_load_daily$Month,PJM_load_daily$Day, sep = "-"))
+
+head(PJM_load_daily)
+
+```
+
+
+```{r}
+PJMgraph_month<- ggplot(PJM_load_monthly, aes(x = NewDate, y = Mean_Load)) +
+  geom_line(color = "black") +
+  geom_smooth(method = "lm") +
+  ggtitle('Monthly Electricity Load in PJM from 2010 to 2022') + 
+  labs(x = "", y = "Average Monhtly Load (MW)")
+
+graph_PJM
+
+```
+
+
+```{r}
+PJMgraph_daily <- ggplot(PJM_load_daily, aes(x = NewDate, y = Mean_Load)) +
+  geom_line(color = "black") +
+  geom_smooth(method = "lm") +
+  ggtitle('Daily Electricity Load in PJM from 2010 to 2022') + 
+  labs(x = "", y = "Average Daily Load (MW)")
+
+PJMgraph_daily
+```
+
+```{r}
+#Generate ts dataframes 
+
+PJM_load_daily_ts <- ts(
+  PJM_load_daily$Mean_Load,
+  start = c(2010,1), frequency = 365
+)
+
+PJM_load_monthly_ts <- ts(
+  PJM_load_daily$Mean_Load,
+  start = c(2010,1),
+  frequency = 12
+)
+
+```
+
+```{r}
+#11 Decompose ts dfs and plot them 
+
+daily_decomposed_PJM <- stl(PJM_load_daily_ts, s.window="periodic")
+plot(daily_decomposed_PJM)
+
+monthly_decomposed_PJM <- stl(PJM_load_monthly_ts, s.window="periodic")
+plot(monthly_decomposed_PJM)
+```
+```{r}
+monthly_load_trend_PJM <- Kendall::SeasonalMannKendall(PJM_load_monthly_ts)
+summary(monthly_load_trend_PJM)
+```
+
+The seasonal Mann-Kendall is the most appropriate test because it is designed to analyze seasonal, non-parametric data, and there is a clear seasonal trend in our data. All other tests we learned about could only be used for non-seasonal data. A positive score (82902071) and tau (0.0681) indicate an increasing trend in the time series data. The p-value smaller than 0.05 allows us to reject the null hypothesis. Therefore, we can conclude that electricity demand has changed over time in PJM. 
+
+
+```{r}
+# Extract seasonal component from the time series 
+
+monthly_decomposed_components_PJM <- as.data.frame(monthly_decomposed_PJM$time.series[,1:3])
+
+monthly_decomposed_deseasoned_PJM <- 
+  PJM_load_monthly_ts-monthly_decomposed_components_PJM$seasonal
+
+# Run the Mann Kendall test on the non-seasonal data
+
+monthly_load_trend_deseason_PJM <- Kendall::MannKendall(monthly_decomposed_deseasoned_PJM)
+summary(monthly_load_trend_deseason_PJM)
+
+```
+Mann Kendall test rejects the null hypothesis, which indicates that there is an increasing trend in the data (tau=0.0687, score=11896706048). This means that PJM load has changed over time from 2010 to 2022 without seasonality components. A p-value <0.05  in the seasonal Mann Kendall test also led us to the same conclusion. 
+
+```{r}
+# Aggregate data by year
+pjm_load_annual <- PJM_load %>%
+  mutate(
+    Year = year(Date)) %>%
+  group_by(Year) %>%
+  summarise(
+    Mean_Load = mean(Load_MW, na.rm = TRUE)
+  )
+
+pjm_load_annual
+```
+
+```{r}
+# Calculate annual rate of growth 
+
+pjm_load_annual <- pjm_load_annual %>%
+  mutate(Growth_Rate_Percent= (Mean_Load / lag(Mean_Load) - 1) * 100)
+
+pjm_load_annual
+```
+
+
+```{r}
+# Calculate total average annual load growth 
+total_mean_growth <- mean(pjm_load_annual$Growth_Rate_Percent, na.rm = TRUE)
+total_mean_growth 
+```
