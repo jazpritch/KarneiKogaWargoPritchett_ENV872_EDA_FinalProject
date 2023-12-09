@@ -34,7 +34,7 @@ theme_set(mytheme)
 
 (Include image of PJM and ERCOT map area)
 
-Written Section 
+Written Section (Bold questions!)
 
 \newpage
 
@@ -44,3 +44,17 @@ Written Section
 # 2.3 Demographic Data 
 
 \newpage
+
+# 3. Exploratory Analysis of Data
+
+Figure 1. Hourly Load Data for ERCOT
+...
+
+# 4. Analysis 
+
+Bold each hypothesis!
+
+# 5. Summary and Conclusions
+
+# 6. References 
+
