@@ -46,12 +46,16 @@ Written Section (Bold questions!)
 \newpage
 
 # 3. Exploratory Analysis of Data
-
-Figure 1. Hourly Load Data for ERCOT
+Figure 1. Boxplot
 ...
 
-# 4. Analysis 
+# 3.1 Exploration of ERCOT
+# 3.2 Exploration of PJM
 
+# 4. Analysis 
+# 4.1 Time Series Analysis 
+# 4.2 Simple Linear Regression of PJM
+# 4.3 Multiple Linear Regression of ERCOT
 Bold each hypothesis!
 
 # 5. Summary and Conclusions
