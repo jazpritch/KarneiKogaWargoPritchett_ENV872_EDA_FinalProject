@@ -1,0 +1,46 @@
+---
+title: 'Key Factors Driving Load Growth in PJM and ERCOT'
+subtitle: "https://github.com/jazpritch/KarneiKogaWargoPritchett_ENV872_EDA_FinalProject"
+author: "Hanna Karnei, Haru Koga, Jazmine Pritchett, Jaimie Wargo" 
+output: pdf_document
+toc: true
+---
+```{r setup directory and packages, include=FALSE}
+library(tidyverse)
+library(here)
+library(dplyr)
+#install.packages("readxl")
+library(readxl)
+library(lubridate)
+library(trend)
+library(stats)
+library(corrplot)
+
+getwd()
+```
+
+```{r setup theme, include=FALSE}
+# Set your ggplot theme
+mytheme <- theme_gray()+
+  theme(plot.title = element_text(size = 16, hjust= 0),
+        axis.title = element_text(size = 13),
+        legend.position = 'right')
+
+theme_set(mytheme)
+```
+
+# 1. Rationale and Research Questions 
+
+
+(Include image of PJM and ERCOT map area)
+
+Written Section 
+
+\newpage
+
+# 2. Dataset Information and Wrangling
+# 2.1 PJM Load Data
+# 2.2 ERCOT Load Data 
+# 2.3 Demographic Data 
+
+\newpage
