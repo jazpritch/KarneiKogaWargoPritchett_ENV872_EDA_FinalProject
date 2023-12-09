@@ -576,31 +576,33 @@ dasr_load <- bind_rows(dasr_2010, dasr_2011, dasr_2012, dasr_2013, dasr_2014, da
 
 ```{r PJM Load v. Price Real time,  echo = FALSE, warning = FALSE, message = FALSE}
 
-ggplot(rt_load, aes(x= Load_MW, y= Price)) + 
+ggplot(rt_load, aes(x= Price, y= Load_MW)) + 
   geom_point() + 
   geom_smooth(method = "lm", se = FALSE) + 
-  labs(x= "Load (MW/h)", y = "Price ($)")
+  labs(x= "Price ($)", y = "Load (MW/h)")
 
 ```
 
 ```{r PJM Load v. Price Day ahead,  echo = FALSE, warning = FALSE, message = FALSE}
-
-ggplot(dasr_load, aes(x= Load_MW, y= Price)) + 
-  geom_point() + geom_smooth(method = "lm", se = FALSE) + 
-  labs(x= "Load (MW/h)", y = "Price ($)")
+ggplot(dasr_load, aes(x= Price, y= Load_MW)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(x= "Price ($)", y = "Load (MW/h)")
 ```
 
+
 ```{r,  echo = FALSE, warning = FALSE, message = FALSE}
-rt.regression <- lm(data = rt_load, Price ~ Load_MW)
+rt.regression <- lm(data = rt_load, Load_MW ~ Price)
 summary(rt.regression)
 ```
 
-```{r,  echo = FALSE, warning = FALSE, message = FALSE}
+
+```{r PJM Load v. Price Day ahead,  echo = FALSE, warning = FALSE, message = FALSE}
 cor.test(rt_load$Price, rt_load$Load_MW)
 ```
 
 ```{r,  echo = FALSE, warning = FALSE, message = FALSE}
-dasr.regression <- lm(data = dasr_load, Price ~ Load_MW)
+dasr.regression <- lm(data = dasr_load, Load_MW ~ Price)
 summary(dasr.regression)
 ```
 
