@@ -58,28 +58,6 @@ output: pdf_document
 |Population:       | Total Population each year for Texas         (https://www.census.gov/programs-surveys/popest/data/data-sets.html) |
 |Mean Load:        | Average load for ERCOT                          |
 
-```{r Load in ERCOT Linear Model Data,  echo = FALSE, warning = FALSE, message = FALSE}
-
-ercot_linear_model_data <- read.csv("Data/Raw/ERCOT_Source_Data/ERCOTLinearModelData.csv")
-ercot_linear_model_data <- left_join(ercot_linear_model_data, ercot_load_yearly) %>% drop_na()
-
-ercot_linear_model_data$percent_minority <- ercot_linear_model_data$percent_minority %>% 
-  as.numeric()
-
-ercot_linear_model_data$med_income <- as.numeric(gsub(",","",ercot_linear_model_data$med_income))
-
-ercot_linear_model_data$population <- as.numeric(gsub(",","",ercot_linear_model_data$population))
-
-ercot_linear_model_data_totprice <- ercot_linear_model_data %>% 
-  select(-c(average_price_com, average_price_ind, average_price_res))
-
-ercot_linear_model_data_totprice
-```
-
-```{r}
-knitr:: kable(ercot_linear_model_data_totprice, caption = "ERCOT Linear Model Demographic Data", col.names = c("Average Price", "Median Income", "% Renewables", "% Minority", "Population", "Mean Load"))
-```
-
 
 
 
