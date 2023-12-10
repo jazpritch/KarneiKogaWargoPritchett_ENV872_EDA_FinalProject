@@ -187,7 +187,7 @@ Written Section
 
 **HYPOTHESIS**
 
-To begin this analysis, we used Akaike’s Information Criterion (AIC) to determine which explanatory variables should be used to prevent over fitting of the data. Table X outlines the results of this test. The lowest AIC value achieved was 173.58 with the average bill price and percent renewables as the chosen variables. This result can be confirmed by observing the correlation plot for the explanatory variables (Figure __).
+To begin this analysis, we used Akaike’s Information Criterion (AIC) to determine which explanatory variables should be used to prevent over fitting of the data. Table X outlines the results of this test. The lowest AIC value achieved was 173.58 with the average bill price and percent renewables as the chosen variables. This result can be confirmed by observing the correlation plot for the explanatory variables (Figure X).
  
 \centering Table : ERCOT Multiple Regression AIC Values \centering 
 
@@ -203,11 +203,21 @@ To begin this analysis, we used Akaike’s Information Criterion (AIC) to determ
 
 ```
 
-Written Section 
+The multiple linear regression using average bill price and percent renewables as the explanatory variables for mean load in ERCOT has an adjusted R2 value of 0.9616, meaning that 96.16% of the variance in average daily load can be explained by the explanatory variables. The p-value of this regression also indicates that the results of this model are statistically significant (p < 0.001, df = 10, F = 151.1). Table X shows the results of this regression. Assuming an alpha of 0.05, all variables are statistically significant, with percent renewables having the strongest significance with a p-value of 0.0001. For every 1% increase in renewable generation, there is a 358.75 MWh increase in average daily load. This is an interesting conclusion with no definitive explanation. It may have to do with the psychology around using more of a resource because it has a lower impact on the environment; for example, if someone has a solar heating system, they may take hot showers for longer because they feel that their energy consumption is cleaner. It could also be more of a technological advancement correlation since society is consuming more energy as we advance, and advancements in technology have resulted in more renewable energy to be captured (bigger wind turbines, more efficient solar panels, etc.) Overall, this finding warrants more study into this particular area.
 
-P-Value Table
+We can also conclude that for every $1 increase in average bill price, there is a 1976.77 MWh increase in average daily load. Upon reflection, this last interpretation should likely have its causation reversed; instead, for every 1976.77 MWh added to the average daily load, there is a $1 increase in average bill price. This would make more sense because as load increases, more expensive generating plants need to be utilized, causing utility companies to have to charge higher rates to make a profit.
 
-Written Section 
+
+\centering Table : ERCOT Multiple Regression P-Values \centering
+
+|        Variable            |           Coefficients     |             P-value       |
+|:---------------------------| ---------------------------|---------------------------|
+|       Intercept            |            15,132.37       |              0.0224       |
+|     average_price          |             1,976.77       |              0.0083       |
+|     percent_renew          |             358.75         |              0.0001       |
+\raggedright
+
+Figure X shows the residuals vs. fitted values, and Figure X shows the Q-Q residuals. These plots demonstrate the goodness of fit of the model. The residuals vs. fitted plot shows the distance of the residuals from the line of fit; it is important to ensure that these values are symmetric for a good fit, and this is the case with our model. The Q-Q plot points should stay close to the 1:1 line, and this is mostly true with our model as well, with some diversions towards the end with points 9 and 10. 
 
 ```{r Residuals v. Fitted Plot}
 
