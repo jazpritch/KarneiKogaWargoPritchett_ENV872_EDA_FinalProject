@@ -30,6 +30,7 @@ mytheme <- theme_gray()+
 theme_set(mytheme)
 ```
 
+
 ```{r ERCOT, include=FALSE}
 # Read the CSV files
 x2010<- read_excel("Data/Raw/ERCOT_Source_Data/2010_ercot_hourly_load_data.xls") %>% 
@@ -466,10 +467,6 @@ Real-time pricing reflects the actual market conditions, while day-ahead pricing
 ```{r Load in price data Real-time,  echo = FALSE, warning = FALSE, message = FALSE}
 
 # Read the CSV files
-rt_2012<- read_csv("Data/Raw/PJM_Source_Data/rt_2012.csv") %>% 
-  rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
-  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
-
 rt_2013<- read_csv("Data/Raw/PJM_Source_Data/rt_2013.csv") %>% 
   rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
   mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
@@ -512,7 +509,7 @@ rt_2022<- read_csv("Data/Raw/PJM_Source_Data/rt_2022.csv") %>%
 
 
 #Merge the data frames based on a common column
-rt_load <- bind_rows(rt_2012, rt_2013, rt_2014, rt_2015, rt_2016, rt_2017, rt_2018, rt_2019, rt_2020, rt_2021, PJM_2022)
+rt_load <- bind_rows(rt_2013, rt_2014, rt_2015, rt_2016, rt_2017, rt_2018, rt_2019, rt_2020, rt_2021, PJM_2022)
 ```
 
 ```{r Load in price data Day-ahead,  echo = FALSE, warning = FALSE, message = FALSE}
@@ -629,6 +626,7 @@ ercot_linear_model_data_totprice <- ercot_linear_model_data %>%
 
 ercot_linear_model_data_totprice
 ```
+
 
 ```{r ERCOT corrplot,  echo = FALSE, warning = FALSE, message = FALSE}
 ercot.tot.Corr <- cor(ercot_linear_model_data_totprice)
