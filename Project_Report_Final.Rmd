@@ -187,9 +187,17 @@ Written Section
 
 **HYPOTHESIS**
 
-Written Section 
+To begin this analysis, we used Akaike’s Information Criterion (AIC) to determine which explanatory variables should be used to prevent over fitting of the data. Table X outlines the results of this test. The lowest AIC value achieved was 173.58 with the average bill price and percent renewables as the chosen variables. This result can be confirmed by observing the correlation plot for the explanatory variables (Figure __).
+ 
+\centering Table : ERCOT Multiple Regression AIC Values \centering 
 
-AIC Table
+| Variables                                                              | AIC Value |
+|-------------------------------------------|-----------------------------|
+| Mean_Load + population + percent_renew + med_income + percent_minority | 178       |
+| average_price_tot + population + percent_renew + med_income            | 176.04    |
+| average_price_tot + percent_renew + med_income                         | 174.26    |
+| average_price_tot + percent_renew                                      | 173.58    |
+\raggedright
 
 ```{r Corr Plot}
 
