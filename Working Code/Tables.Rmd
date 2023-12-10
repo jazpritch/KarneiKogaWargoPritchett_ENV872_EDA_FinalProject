@@ -1,0 +1,88 @@
+---
+output: pdf_document
+---
+
+\center Table : Dataset Information for PJM \center
+
+|  **Detail**   | **Description **                                           | 
+|:--------------|------------------------------------------------------------|
+|Data Source:   |JM Website - Metered Hourly Load                            |  
+|Retrieved From:|https://dataminer2.pjm.com/feed/hrl_load_metered/definition | 
+|Variables Used:|datetime_beginning_ept(Date), mw (Load_MW)                  | 
+|Date Range:    |1/1/2010 - 12/31/2022                                       | 
+
+
+
+\center Table : Real-Time Dataset Information for PJM \center 
+
+|  **Detail**   | **Description **                                               | 
+|:--------------|----------------------------------------------------------------|
+|Data Source:   |PJM website - Regulation Zone Preliminary Billing Data          | 
+|Retrieved From:|https://dataminer2.pjm.com/feed/reg_zone_prelim_bill/definition | 
+|Variables Used:|datetime_beginning_ept(Date), mw (Load_MW), rmpcp (Price)       | 
+|Date Range:    |1/1/2013 - 12/31/2022                                           | 
+
+
+
+\center Table : Day-Ahead Dataset Information for PJM \center 
+
+|  **Detail**   | **Description **                                           | 
+|:--------------|------------------------------------------------------------|
+|Data Source:   |PJM website - Day-Ahead Scheduling Reserve                  | 
+|Retrieved From:|https://dataminer2.pjm.com/feed/dasr_results/definition     | 
+|Variables Used:|datetime_beginning_ept (Date), mw (Load_MW), dasrmcp (Price)| 
+|Date Range:    |1/1/2010 - 12/31/2022                                       | 
+
+
+
+\center Table : Dataset Information for ERCOT \center 
+
+|  **Detail**   | **Description **                                           | 
+|:--------------|------------------------------------------------------------|
+|Data Source:   |ERCOT Hourly Load Data Archives                             | 
+|Retrieved From:|https://www.ercot.com/gridinfo/load/load_hist               | 
+|Variables Used:|Hour_Ending, ERCOT                                          | 
+|Date Range:    | 1/1/2010 - 12/31/2022                                      | 
+
+
+
+\center Table : ERCOT Linear Model Demographic Data \center 
+
+| **Detail**       | **Description **                                | 
+|:--------------   |-------------------------------------------------|
+|Year:             | 2010 - 2022                                     | 
+|Electricity Price:|Average prices of electricity to ultimate customers         (https://www.eia.gov/totalenergy/data/monthly/pdf/sec9_11.pdf)       | 
+|Median Income:    | Income level at which half of the households in Texas earn more and half earn less  (https://fred.stlouisfed.org/series/MEHOINUSTXA672N# )    |                      
+|Percent Renewable:|                                                 | 
+|Percent Minority: | Subtraction of white only percentages after dividing white popultion from totals (U.S. Census 2010-2022)                                  |
+|Population:       | Total Population each year for Texas         (https://www.census.gov/programs-surveys/popest/data/data-sets.html) |
+|Mean Load:        | Average load for ERCOT                          |
+
+```{r Load in ERCOT Linear Model Data,  echo = FALSE, warning = FALSE, message = FALSE}
+
+ercot_linear_model_data <- read.csv("Data/Raw/ERCOT_Source_Data/ERCOTLinearModelData.csv")
+ercot_linear_model_data <- left_join(ercot_linear_model_data, ercot_load_yearly) %>% drop_na()
+
+ercot_linear_model_data$percent_minority <- ercot_linear_model_data$percent_minority %>% 
+  as.numeric()
+
+ercot_linear_model_data$med_income <- as.numeric(gsub(",","",ercot_linear_model_data$med_income))
+
+ercot_linear_model_data$population <- as.numeric(gsub(",","",ercot_linear_model_data$population))
+
+ercot_linear_model_data_totprice <- ercot_linear_model_data %>% 
+  select(-c(average_price_com, average_price_ind, average_price_res))
+
+ercot_linear_model_data_totprice
+```
+
+```{r}
+knitr:: kable(ercot_linear_model_data_totprice, caption = "ERCOT Linear Model Demographic Data", col.names = c("Average Price", "Median Income", "% Renewables", "% Minority", "Population", "Mean Load"))
+```
+
+
+
+
+
+
+

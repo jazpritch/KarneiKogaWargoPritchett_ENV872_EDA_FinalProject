@@ -1,10 +1,11 @@
 ---
-title: 'Key Factors Driving Load Growth in PJM and ERCOT'
-subtitle: "https://github.com/jazpritch/KarneiKogaWargoPritchett_ENV872_EDA_FinalProject"
+title: '**Key Factors Driving Load Growth in PJM and ERCOT**'
 author: "Hanna Karnei, Haru Koga, Jazmine Pritchett, Jaimie Wargo" 
 output: pdf_document
 toc: true
 ---
+
+
 ```{r setup directory and packages, include=FALSE}
 library(tidyverse)
 library(here)
@@ -28,6 +29,11 @@ mytheme <- theme_gray()+
 
 theme_set(mytheme)
 ```
+
+# Github Repository 
+
+https://github.com/jazpritch/KarneiKogaWargoPritchett_ENV872_EDA_FinalProject
+
 
 # 1. Rationale and Research Questions 
 
