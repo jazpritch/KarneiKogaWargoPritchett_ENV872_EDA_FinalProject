@@ -6,6 +6,7 @@ toc: true
 ---
 
 
+
 ```{r setup directory and packages, include=FALSE}
 library(tidyverse)
 library(here)
@@ -34,37 +35,183 @@ theme_set(mytheme)
 
 https://github.com/jazpritch/KarneiKogaWargoPritchett_ENV872_EDA_FinalProject
 
+\newpage
 
 # 1. Rationale and Research Questions 
 
+```{r, echo=FALSE, out.height= "300px"}
 
-(Include image of PJM and ERCOT map area)
+knitr::include_graphics("RTOs-ISOs-map-from-Sustainable-FERC-Project-1-600x400.jpg")
+```
+
 
 Written Section (Bold questions!)
 
 \newpage
 
 # 2. Dataset Information and Wrangling
-# 2.1 PJM Load Data
-# 2.2 ERCOT Load Data 
-# 2.3 Demographic Data 
+
+Written Section
+
+## 2.1 PJM Load Data
+
+Written Section 
+
+
+\centering Table : Dataset Information for PJM \centering
+
+|  **Detail**   | **Description **                                           | 
+|:--------------|------------------------------------------------------------|
+|Data Source:   |JM Website - Metered Hourly Load                            |  
+|Retrieved From:|https://dataminer2.pjm.com/feed/hrl_load_metered/definition | 
+|Variables Used:|datetime_beginning_ept(Date), mw (Load_MW)                  | 
+|Date Range:    |1/1/2010 - 12/31/2022                                       |
+
+
+
+\centering Table : Real-Time Dataset Information for PJM \centering
+
+|  **Detail**   | **Description **                                               | 
+|:--------------|----------------------------------------------------------------|
+|Data Source:   |PJM website - Regulation Zone Preliminary Billing Data          | 
+|Retrieved From:|https://dataminer2.pjm.com/feed/reg_zone_prelim_bill/definition | 
+|Variables Used:|datetime_beginning_ept(Date), mw (Load_MW), rmpcp (Price)       | 
+|Date Range:    |1/1/2013 - 12/31/2022                                           | 
+
+
+\centering Table : Day-Ahead Dataset Information for PJM \centering 
+
+|  **Detail**   | **Description **                                           | 
+|:--------------|------------------------------------------------------------|
+|Data Source:   |PJM website - Day-Ahead Scheduling Reserve                  | 
+|Retrieved From:|https://dataminer2.pjm.com/feed/dasr_results/definition     | 
+|Variables Used:|datetime_beginning_ept (Date), mw (Load_MW), dasrmcp (Price)| 
+|Date Range:    |1/1/2010 - 12/31/2022                                       | 
+
+\raggedright
+
+## 2.2 ERCOT Load Data 
+
+Written Section
+
+
+\centering Table : Dataset Information for ERCOT \centering 
+
+|  **Detail**   | **Description **                                           | 
+|:--------------|------------------------------------------------------------|
+|Data Source:   |ERCOT Hourly Load Data Archives                             | 
+|Retrieved From:|https://www.ercot.com/gridinfo/load/load_hist               | 
+|Variables Used:|Hour_Ending, ERCOT                                          | 
+|Date Range:    | 1/1/2010 - 12/31/2022                                      |
+\raggedright
+
+## 2.3 Demographic Data 
+
+Written Section
+
+
+\centering Table : ERCOT Linear Model Demographic Data \centering 
+
+| **Detail**       | **Description **                                | 
+|:--------------   |-------------------------------------------------|
+|Year:             | 2010 - 2022                                     | 
+|Electricity Price:|Average prices of electricity to ultimate customers         (https://www.eia.gov/totalenergy/data/monthly/pdf/sec9_11.pdf)       | 
+|Median Income:    | Income level at which half of the households in Texas earn more and half earn less  (https://fred.stlouisfed.org/series/MEHOINUSTXA672N# )    |                      
+|Percent Renewable:|                                                 | 
+|Percent Minority: | Subtraction of white only percentages after dividing white popultion from totals (U.S. Census 2010-2022)                                  |
+|Population:       | Total Population each year for Texas         (https://www.census.gov/programs-surveys/popest/data/data-sets.html) |
+|Mean Load:        | Average load for ERCOT                          |
+\raggedright
 
 \newpage
 
 # 3. Exploratory Analysis of Data
-Figure 1. Boxplot
-...
 
-# 3.1 Exploration of ERCOT
-# 3.2 Exploration of PJM
+Written Section 
+
+```{r Load Distribution Boxplot}
+
+```
+
+
+## 3.1 Exploration of ERCOT
+
+```{r Hourly Load Plot ERCOT}
+
+```
+
+```{r Monthly Load Plot ERCOT}
+
+```
+
+## 3.2 Exploration of PJM
+
+```{r Hourly Load Plot PJM}
+
+```
+
+```{r Monthly Load Plot PJM}
+
+```
 
 # 4. Analysis 
-# 4.1 Time Series Analysis 
-# 4.2 Simple Linear Regression of PJM
-# 4.3 Multiple Linear Regression of ERCOT
-Bold each hypothesis!
+## 4.1 Time Series Analysis 
+
+**HYPOTHESIS**
+
+
+## 4.2 Growth Analysis
+## 4.3 Simple Linear Regression of PJM
+
+**HYPOTHESIS**
+
+Written Section 
+
+```{r Linear Regression PJM Real-Time}
+
+```
+
+Table
+
+Written Section
+
+```{r Linear Regression PJM Day- Ahead}
+
+```
+
+Table
+
+Written Section
+
+## 4.4 Multiple Linear Regression of ERCOT
+
+**HYPOTHESIS**
+
+Written Section 
+
+AIC Table
+
+```{r Corr Plot}
+
+```
+
+Written Section 
+
+P-Value Table
+
+Written Section 
+
+```{r Residuals v. Fitted Plot}
+
+```
+
+```{r Q-Q Plot}
+
+```
 
 # 5. Summary and Conclusions
 
 # 6. References 
+
+Image Source: https://pv-magazine-usa.com/2022/06/29/faster-lower-cost-interconnection-by-combining-ercot-miso-pjm-approaches/
 
