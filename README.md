@@ -106,9 +106,13 @@ library(lubridate)
 library(trend)
 library(stats)
 library(corrplot)
+
 theme_set - used to set theme 
+
 rbind - merged 2010-2022 individual xls and csv files for PJM load data, ERCOT load data, and PJM day-ahead and real-time data. 
+
 \centering - center table captions
+
 \raggededge - left align subsequent text 
 
 Note: Full code examples for plots and tests can be found in 'Working Code' folder.
