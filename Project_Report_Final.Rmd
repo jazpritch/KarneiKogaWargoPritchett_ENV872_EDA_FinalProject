@@ -162,7 +162,15 @@ PJM_load <- bind_rows(PJM_2010, PJM_2011, PJM_2012, PJM_2013, PJM_2014, PJM_2015
 knitr::include_graphics("RTOs-ISOs-map-from-Sustainable-FERC-Project-1-600x400.jpg")
 ```
 
-Written Section (Bold questions!)
+The U.S. electric grid is a complex web of deregulated and regulated energy markets operating to provide reliable and affordable electricity to its customers. There are seven deregulated markets in the country, known as Independent System Operators (ISOs) or Regional Transmission Organizations (RTOs). Two grid operators -- PJM Interconnection and Electric Reliability Council of Texas (ERCOT) -- were selected for this analysis to compare and contrast their electricity load patterns and drivers. The reason for choosing PJM and ERCOT was due to their size, geographic reach, and market dynamism. Combined, ERCOT and PJM provide electricity to 90 million customers -- almost a third of the U.S. population. PJM is a grid operator that serves 13 states in the Northeast and the District of Columbia, whereas ERCOT predominantly operates in one state -- Texas. Both markets saw significant changes in their energy fuel mix and customer size over the past several decades. The structural differences between PJM and ERCOT, together with their large customer base, present an interesting case for comparison.
+
+The current analysis aims to answer the following questions:
+
+1.  **Has load in ERCOT and PJM increased over time? If so, has it grown at the same rate across the two energy markets?**
+
+2.  **What are the key social, economic, and energy-related drivers of electricity demand growth in ERCOT and PJM? Are there any differences between the markets?**
+
+This paper will explore how factors such as population size, employment rate, median income, residential electricity bill, and renewable penetration affect load growth. As the U.S. moves toward a net-zero economy, a large share of the transportation, residential, and industrial sectors will be electrified, thus increasing total electricity demand. To better plan for the future needs of the U.S. electric grid, it is critical to examine the historical trends in electricity load and key aspects affecting it. This analysis aims to shed light on the interplay between electricity consumption and socioeconomic characteristics of the ERCOT and PJM customer base to add to the growing body of literature discussing the past, present, and future of electricity demand in the U.S.
 
 \newpage
 
@@ -177,7 +185,7 @@ The PJM website provides metered hourly data which contain the net energy in meg
 \centering Table 1: Dataset Information for PJM \centering
 
 | **Detail**      | **Description**                                               |
-|:----------------|-------------------------------------------------------|
+|:-----------------|------------------------------------------------------|
 | Data Source:    | JM Website - Metered Hourly Load                              |
 | Retrieved From: | <https://dataminer2.pjm.com/feed/hrl_load_metered/definition> |
 | Variables Used: | datetime_beginning_ept(Date), mw (Load_MW)                    |
@@ -192,7 +200,7 @@ The PJM website provides day-ahead scheduling reserve data and regulation zone p
 \centering Table 2: Real-Time Dataset Information for PJM \centering
 
 | **Detail**      | **Description**                                                   |
-|:----------------|-------------------------------------------------------|
+|:-----------------|------------------------------------------------------|
 | Data Source:    | PJM website - Regulation Zone Preliminary Billing Data            |
 | Retrieved From: | <https://dataminer2.pjm.com/feed/reg_zone_prelim_bill/definition> |
 | Variables Used: | datetime_beginning_ept(Date), mw (Load_MW), rmpcp (Price)         |
@@ -203,7 +211,7 @@ The PJM website provides day-ahead scheduling reserve data and regulation zone p
 \centering Table 3: Day-Ahead Dataset Information for PJM \centering
 
 | **Detail**      | **Description**                                              |
-|:----------------|------------------------------------------------------|
+|:-----------------|------------------------------------------------------|
 | Data Source:    | PJM website - Day-Ahead Scheduling Reserve                   |
 | Retrieved From: | <https://dataminer2.pjm.com/feed/dasr_results/definition>    |
 | Variables Used: | datetime_beginning_ept (Date), mw (Load_MW), dasrmcp (Price) |
@@ -237,7 +245,7 @@ The Energy Information Administration (EIA) provided the average Texas energy bi
 \centering Table 5: ERCOT Linear Model Demographic Data \centering
 
 | **Detail**         | **Description**                                                                                                                             |
-|:-------------|----------------------------------------------------------|
+|:----------------|-------------------------------------------------------|
 | Year:              | 2010 - 2022                                                                                                                                 |
 | Electricity Price: | Average prices of electricity to ultimate customers (<https://www.eia.gov/totalenergy/data/monthly/pdf/sec9_11.pdf>)                        |
 | Median Income:     | Income level at which half of the households in Texas earn more and half earn less (<https://fred.stlouisfed.org/series/MEHOINUSTXA672N#> ) |
@@ -696,7 +704,7 @@ step(ercot.AIC.total)
 \centering Table 7: ERCOT Multiple Regression AIC Values \centering
 
 | Variables                                                              | AIC Value |
-|---------------------------------------------------------|---------------|
+|-------------------------------------------------------|-----------------|
 | Mean_Load + population + percent_renew + med_income + percent_minority | 178       |
 | average_price_tot + population + percent_renew + med_income            | 176.04    |
 | average_price_tot + percent_renew + med_income                         | 174.26    |
