@@ -625,7 +625,7 @@ summary(rt.regression)
 cor.test(rt_load$Price, rt_load$Load_MW)
 ```
 
-\centering Table : PJM Real-Time Linear Regression Values \centering
+\centering Table 6: PJM Real-Time Linear Regression Values \centering
 
 | P-Value    | Tau Value | R-Squared | Coefficient |
 |:-----------|-----------|-----------|-------------|
@@ -652,7 +652,7 @@ summary(dasr.regression)
 cor.test(dasr_load$Price, dasr_load$Load_MW)
 ```
 
-\centering Table : PJM Day-Ahead Linear Regression Values \centering
+\centering Table 7: PJM Day-Ahead Linear Regression Values \centering
 
 | P-Value    | Tau Value | R-Squared | Coefficient |
 |:-----------|-----------|-----------|-------------|
@@ -729,7 +729,7 @@ summary(ercot.totalavg.regression)
 
 ```
 
-\centering Table : ERCOT Multiple Regression P-Values \centering
+\centering Table 8: ERCOT Multiple Regression P-Values \centering
 
 | Variable      | Coefficients | P-Value |
 |:--------------|--------------|---------|
