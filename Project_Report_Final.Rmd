@@ -268,7 +268,7 @@ mtext("Figure 1", line=0.5)
 
 Figure 2 and Figure 3 show the monthly electricity load from 2010 to 2022 with a trend line over time in PJM and ERCOT, respectively. The trend lines in both figures seem to be increasing over time, which have been statistically tested below.
 
-```{r Monthly Load Plot ERCOT, echo = FALSE, warning = FALSE, message = FALSE}
+```{r Monthly Load Plot ERCOT, echo = FALSE, warning = FALSE, message = FALSE,fig.height=3.75}
 #Aggregrate by month 
 ercot_load_monthly <- ercot_load %>%
   mutate(
@@ -293,7 +293,7 @@ graph1 <- ggplot(ercot_load_monthly, aes(x = NewDate, y = Mean_Load)) +
 graph1
 ```
 
-```{r Monthly Load Plot PJM, echo = FALSE, warning = FALSE, message = FALSE}
+```{r Monthly Load Plot PJM, echo = FALSE, warning = FALSE, message = FALSE, fig.height=3.75}
 #Aggregate by month
 PJM_load_monthly <- PJM_load %>%
   mutate(
@@ -490,6 +490,7 @@ total_mean_growth
 ```
 
 While ERCOT load shows relatively constant growth each year, the PJM load growth rate displays fluctuation. One thing in common is that both markets experienced a decrease in the load in 2020; the load in ERCOT and PJM have dropped by 0.81% and 4.06% respectively in 2020. This can be explained by the COVID-19 pandemic which paused a lot of social and economic activities. What's interesting is the opposite direction of load change in 2012; whereas PJM load has increased by 5.33% which is the maximum growth rate for PJM between 2010 and 2022, ERCOT load has decreased by 2.96% in 2012 from the year before. ERCOT observes the maximum growth rate in 2022, increasing by 9.47% from 2021. Overall, the total average annual growth rate is 2.58% for ERCOT and 0.96% for PJM. Hence, ERCOT has experienced more growth in electricity load from 2010 to 2022 than PJM has.
+\newpage
 
 ## 4.3 Simple Linear Regression of PJM
 
@@ -737,7 +738,7 @@ summary(ercot.totalavg.regression)
 
 Figure 8 shows the residuals vs. fitted values, and Figure 9 shows the Q-Q residuals. These plots demonstrate the goodness of fit of the model. The residuals vs. fitted plot shows the distance of the residuals from the line of fit; it is important to ensure that these values are symmetric for a good fit, and this is the case with our model. The Q-Q plot points should stay close to the 1:1 line, and this is mostly true with our model as well, with some diversions towards the end with points 9 and 10.
 
-```{r Residuals v. Fitted Plot, echo = FALSE, warning = FALSE, message = FALSE}
+```{r Residuals v. Fitted Plot, echo = FALSE, warning = FALSE, message = FALSE, fig.height=4}
 #Regression Summary
 ercot.totalavg.regression <- lm(data = ercot_linear_model_data_totprice, 
                        Mean_Load ~ average_price_tot + percent_renew)
@@ -746,7 +747,7 @@ ercot.totalavg.regression <- lm(data = ercot_linear_model_data_totprice,
 plot(ercot.totalavg.regression, which=1, main = "Figure 8")
 ```
 
-```{r Q-Q Plot, echo = FALSE, warning = FALSE, message = FALSE}
+```{r Q-Q Plot, echo = FALSE, warning = FALSE, message = FALSE, fig.height=4}
 plot(ercot.totalavg.regression, which=2, main = "Figure 9")
 ```
 
