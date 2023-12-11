@@ -223,8 +223,6 @@ The PJM website provides day-ahead scheduling reserve data and regulation zone p
 
 The ERCOT website provides historical hourly data which contains the net energy in megawatt-hours consumed by the ERCOT control area. The dataset takes values from different zones and areas and compiles them into a total ERCOT value for each hour. For the analysis, metered hourly load data with over 8000 observations for each year from 2010 to 2022 were downloaded and merged into one data frame. Additionally, the hourly data has been converted into daily and monthly datasets by taking the mean of every 24-hour and each month respectively for the time series analysis.
 
-\newpage
-
 \centering Table 4: Dataset Information for ERCOT \centering
 
 | **Detail**      | **Description**                                 |
