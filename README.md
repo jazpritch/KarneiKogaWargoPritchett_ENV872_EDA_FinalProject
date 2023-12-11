@@ -81,7 +81,7 @@ RTO-ISOs-map JPEG file for final report
 
 ## Metadata
 
-<For each data file in the repository, describe the data contained in each column. Include the column name, a description of the information, the class of data, and any units associated with the data. Create a list or table for each data file.> 
+Metadata for each dataset can be found under the 'Metadata' folder. Each MD file is named after the dataset and contains an appendix on further information on the data from the source. 
 
 ## Scripts and code
 
