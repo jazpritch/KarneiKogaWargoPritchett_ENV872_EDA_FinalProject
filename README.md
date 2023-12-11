@@ -56,6 +56,17 @@ README
 
 Data
 - Metadata
+-- 'ERCOT_HOURLY_Load' README File
+-- 'ERCOT_Linear_Model_Data' README File
+-- 'PJM_Day_Ahead_Code_Appendix.pdf' guide on data column information 
+-- 'PJM_Day_Ahead_Dataset' README File
+-- 'PJM_Hourly_Metered_Load_Code_Appendix.pdf' guide on data column information
+-- 'PJM_Hourly_Metered_Load' README File
+-- 'PJM_Real_Time_Code_Appendix.pdf' guide on data column information 
+-- 'ERCOT_Electricity_Prices_Guide.pdf' on data column information 
+-- 'existcapacity_annual.xlsx' data referred to in 'ERCOT_Linear_Model_Data' README File
+-- 'MEHOINUSTXA672N.xls' data referred to in 'ERCOT_Linear_Model_Data' README File
+-- 'PJM_Real_Time_Dataset' README File
 
 - Processed
 - Raw
@@ -96,7 +107,7 @@ library(trend)
 library(stats)
 library(corrplot)
 theme_set - used to set theme 
-rbind - merged 2010-2022 individual xls and csv files 
+rbind - merged 2010-2022 individual xls and csv files for PJM load data, ERCOT load data, and PJM day-ahead and real-time data. 
 \centering - center table captions
 \raggededge - left align subsequent text 
 
