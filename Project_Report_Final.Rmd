@@ -493,7 +493,7 @@ While ERCOT load shows relatively constant growth each year, the PJM load growth
 
 **The null hypothesis: There is no effect of LMP on electricity load in PJM from 2010 and 2013 to 2022.** **Alternative hypothesis: LMP has an effect on electricity load in PJM from 2010 and 2013 to 2022.**
 
-The analysis of load growth is influenced by various factors, including those related to demand, energy-efficient technology, and energy consumption across different sectors along with market dynamics and policy regulation. Linear regression was conducted to model the relationship between price and both real-time (Figure 5) and day-ahead load (Figure 6). The factor of price was selected due to it's accessibility given the cover area of PJM spanning over multiple states compared to the sole state coverage of Texas that ERCOT has. Based on the analysis of load in comparison to price, results show that growth is influenced by a diverse set of variables beyond price.
+The analysis of load growth is influenced by various factors, including those related to demand, energy-efficient technology, and energy consumption across different sectors along with market dynamics and policy regulation. Linear regression was conducted to model the relationship between price and both real-time (Figure 5) and day-ahead load (Figure 6). The factor of price was selected due to its accessibility given the cover area of PJM spanning over multiple states compared to the sole state coverage of Texas that ERCOT has. Based on the analysis of load in comparison to price, results show that growth is influenced by a diverse set of variables beyond price.
 
 ```{r Load in price data Real-time,  echo = FALSE, warning = FALSE, message = FALSE}
 
@@ -607,7 +607,7 @@ ggplot(rt_load, aes(x= Price, y= Load_MW)) +
   geom_point() + 
   geom_smooth(method = "lm", se = FALSE) + 
   ggtitle('Real-Time LMP Effect on Load in PJM from 2010 to 2022') +
-  labs(subtitle = "Figure 6", x= "Price ($)", y = "Load (MW/h)") 
+  labs(subtitle = "Figure 6", x= "Price ($)", y = "Load (MW)") 
 ```
 
 ```{r,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
@@ -634,7 +634,7 @@ ggplot(dasr_load, aes(x= Price, y= Load_MW)) +
   geom_point() + 
   geom_smooth(method = "lm", se = FALSE) + 
   ggtitle('Day-Ahead LMP Effect on Load in PJM from 2013 to 2022') +
-  labs(subtitle = "Figure 7", x= "Price ($)", y = "Load (MW/h)")
+  labs(subtitle = "Figure 7", x= "Price ($)", y = "Load (MW)")
 ```
 
 ```{r,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
@@ -697,12 +697,12 @@ step(ercot.AIC.total)
 
 \centering Table 8: ERCOT Multiple Regression AIC Values \centering
 
-| Variables                                                              | AIC Value |
-|------------------------------------------------------|------------------|
-| Mean_Load + population + percent_renew + med_income + percent_minority | 178       |
-| average_price_tot + population + percent_renew + med_income            | 176.04    |
-| average_price_tot + percent_renew + med_income                         | 174.26    |
-| average_price_tot + percent_renew                                      | 173.58    |
+| Variables                                                   | AIC Value |
+|-------------------------------------------------------------|-----------|
+| population + percent_renew + med_income + percent_minority  | 178       |
+| average_price_tot + population + percent_renew + med_income | 176.04    |
+| average_price_tot + percent_renew + med_income              | 174.26    |
+| average_price_tot + percent_renew                           | 173.58    |
 
 \raggedright
 
@@ -711,9 +711,9 @@ ercot.tot.Corr <- cor(ercot_linear_model_data_totprice)
 corrplot(ercot.tot.Corr, method = 'ellipse')
 ```
 
-The multiple linear regression using average bill price and percent renewables as the explanatory variables for mean load in ERCOT has an adjusted R2 value of 0.9616, meaning that 96.16% of the variance in average daily load can be explained by the explanatory variables. The p-value of this regression also indicates that the results of this model are statistically significant (p \< 0.001, df = 10, F = 151.1). Table 9 shows the results of this regression. Assuming an alpha of 0.05, all variables are statistically significant, with percent renewables having the strongest significance with a p-value of 0.0001. For every 1% increase in renewable generation, there is a 358.75 MWh increase in average daily load. This is an interesting conclusion with no definitive explanation. It may have to do with the psychology around using more of a resource because it has a lower impact on the environment; for example, if someone has a solar heating system, they may take hot showers for longer because they feel that their energy consumption is cleaner. It could also be more of a technological advancement correlation since society is consuming more energy as we advance, and advancements in technology have resulted in more renewable energy to be captured (bigger wind turbines, more efficient solar panels, etc.) Overall, this finding warrants more study into this particular area.
+The multiple linear regression using average bill price and percent renewables as the explanatory variables for mean load in ERCOT has an adjusted R-squared value of 0.9616, meaning that 96.16% of the variance in average daily load can be explained by the explanatory variables. The p-value of this regression also indicates that the results of this model are statistically significant (p \< 0.001, df = 10, F = 151.1). Table 9 shows the results of this regression. Assuming an alpha of 0.05, all variables are statistically significant, with percent renewables having the strongest significance with a p-value of 0.0001. For every 1% increase in renewable generation, there is a 358.75 MW increase in average daily load. This is an interesting conclusion with no definitive explanation. It may have to do with the psychology around using more of a resource because it has a lower impact on the environment; for example, if someone has a solar heating system, they may take hot showers for longer because they feel that their energy consumption is cleaner. It could also be more of a technological advancement correlation since society is consuming more energy as we advance, and advancements in technology have resulted in more renewable energy to be captured (bigger wind turbines, more efficient solar panels, etc.) Overall, this finding warrants more study into this particular area.
 
-We can also conclude that for every \$1 increase in average bill price, there is a 1976.77 MWh increase in average daily load. Upon reflection, this last interpretation should likely have its causation reversed; instead, for every 1976.77 MWh added to the average daily load, there is a \$1 increase in average bill price. This would make more sense because as load increases, more expensive generating plants need to be utilized, causing utility companies to have to charge higher rates to make a profit.
+We can also conclude that for every \$1 increase in average bill price, there is a 1976.77 MW increase in average daily load. Upon reflection, this last interpretation should likely have its causation reversed; instead, for every 1976.77 MW added to the average daily load, there is a \$1 increase in average bill price. This would make more sense because as load increases, more expensive generating plants need to be utilized, causing utility companies to have to charge higher rates to make a profit.
 
 ```{r ERCOT Regression Summary,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
 ercot.totalavg.regression <- lm(data = ercot_linear_model_data_totprice, 
@@ -752,7 +752,9 @@ plot(ercot.totalavg.regression, which=2, main = "Figure 9")
 
 Regarding our first research question, whether ERCOT and PJM load growth has changed over time, we concluded that the answer is yes. In the time series analyses in section 4.1, both ERCOT and PJM average monthly load was found to statistically increase over time (p-values \< 0.05), accounting for seasonality trends. Additionally, we found that the growth was not equivalent across the two markets; ERCOT displays higher annual load growth (2.58%) than PJM (0.96%).
 
-When analyzing what variables contribute to load growth in the ERCOT market
+The simple linear regressions conducted to assess whether there is a linear relationship between LMP and loads in PJM found that, for both real-time and day-ahead market prices, the explanatory variables of market prices were statistically significant (both p-values \< 0.001), but the R-squared values indicated that these models were poorly fit (0.0023 and 0.0367, respectively). With this evidences as well as the figures (Figures 6 and 7), we can conclude that while market prices are significant factors, there may be other variables that could improve fit, or these relationships may be non-linear altogether.
+
+When analyzing what variables contribute to load growth in the ERCOT market, we found that the most significant factors are average bill prices (averaged across all consuming sectors) and the percentage of renewable penetration, found using Akaike's Information Criterion (AIC). Average bill price and percent renewables were both statistically significant in the multiple linear regression (p-values \< 0.05, 0.001 respectively). The coefficient for average bill price was 1976.77, meaning that for every \$1 increase in average bill price, average annual load increases by 1976.77 MW. For renewable penetration, we found that for every 1% increase in renewable energy generation, average annual load increases by 358.75 MW. The high adjusted R-squared value (0.9616) indicates that 96.16% of variation in average annual load can be attributed to the explanatory variables, signalling a good fit for this model. With this model, we have evidence to reject our null hypothesis that there are no relationships between the explanatory and response variables of our model.
 
 # 6. References
 
