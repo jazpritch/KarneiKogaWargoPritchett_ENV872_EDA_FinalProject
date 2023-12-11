@@ -258,7 +258,7 @@ The Energy Information Administration (EIA) provided the average Texas energy bi
 Figure X illustrates the distribution of electricity load between ERCOT and PJM for the years 2010-2022. The vertically flat box plot of ERCOT indicates low variability in the data, reflecting its role as an independent operator in Texas. In contrast, the wider spread of data in the PJM boxplot is consistent with its regional coverage over multiple states. The box plots provide a visual summary of load distribution, highlighting the differences in variability between the two operators, which can be attributed to their operational coverage and help determine load growth. 
 
 ```{r Load Distribution Boxplot, echo = FALSE, warning = FALSE, message = FALSE}
-boxplot(ercot_load, PJM_load, names = c("ERCOT", "PJM"), xlab = "Operator", ylab = "Load (MW)", main = "Electricity Load Distribution in ERCOT v. PJM 2010-2022" , par(font.main = 1))
+boxplot(ercot_load, PJM_load, names = c("ERCOT", "PJM"), xlab = "Operator", ylab = "Load (MW)", main = "Electricity Load Distribution in ERCOT vs PJM 2010-2022" , par(font.main = 1))
 ```
 
 Figure X and Figure X show the monthly electricity load from 2010 to 2022 with a trend line over time in PJM and ERCOT, respectively. The trend lines in both figures seem to be increasing over time, which have been statistically tested below. 
