@@ -750,7 +750,9 @@ plot(ercot.totalavg.regression, which=2, main = "Figure 9")
 
 # 5. Summary and Conclusions
 
-Regarding our first research question, whether ERCOT and PJM load growth has changed over time, we concluded that the answer is yes. In the time series analyses in section 4.1, both ERCOT and PJM average monthly load was found to statistically increase over time (p-values \< 0.05), even .
+Regarding our first research question, whether ERCOT and PJM load growth has changed over time, we concluded that the answer is yes. In the time series analyses in section 4.1, both ERCOT and PJM average monthly load was found to statistically increase over time (p-values \< 0.05), accounting for seasonality trends. Additionally, we found that the growth was not equivalent across the two markets; ERCOT displays higher annual load growth (2.58%) than PJM (0.96%).
+
+When analyzing what variables contribute to load growth in the ERCOT market
 
 # 6. References
 
