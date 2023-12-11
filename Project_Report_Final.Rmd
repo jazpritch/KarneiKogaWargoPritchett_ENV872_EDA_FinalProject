@@ -314,7 +314,6 @@ PJMgraph_month
 ```
 
 # 4. Analysis 
-
 ## 4.1 Time Series Analysis 
 
 Time series objects were created for the average monthly load data for PJM and ERCOT and were subsequently decomposed into seasonal, trend, and remainder components (Figure X, Figure X). The seasonal Mann-Kendall test was applied to test the null hypothesis that the increasing trend in the PJM and ERCOT monthly load data is not statistically significant. The test results indicate that there is a statistically significant increasing trend in the PJM electricity load from 2010 to 2022 with its positive score of 82902071 and tau of 0.068. A p-value smaller than 0.05 allowed us to reject the null hypothesis. Similarly, the results of the seasonal Mann-Kendall test for the ERCOT data showed a statistically significant increase in load over time (tau=0.341, score=361963, p<0.05).  Therefore, we were able to conclude that average monthly electricity demand has grown over time in both energy markets.
@@ -355,14 +354,31 @@ ercot_load_yearly <- ercot_load %>%
 ercot_load_monthly_ts <- ts(
   ercot_load_daily$Mean_Load,
   start = c(2010,1),
-  frequency = 12
-)
+  frequency = 12)
 
 #Plot
 monthly_decomposed <- stl(ercot_load_monthly_ts, s.window="periodic")
 plot(monthly_decomposed)
 
 ```
+```{r ERCOT TEST,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
+monthly_load_trend <- Kendall::SeasonalMannKendall(ercot_load_monthly_ts)
+summary(monthly_load_trend)
+```
+
+```{r ERCOT DESEASON TEST,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
+# Extract seasonal component from the time series 
+
+monthly_decomposed_components <- as.data.frame(monthly_decomposed$time.series[,1:3])
+
+monthly_decomposed_deseasoned <- 
+  ercot_load_monthly_ts-monthly_decomposed_components$seasonal
+
+# Run the Mann Kendall test on the non-seasonal data
+monthly_load_trend_deseason <- Kendall::MannKendall(monthly_decomposed_deseasoned)
+summary(monthly_load_trend_deseason)
+```
+
 **The null hypothesis: Electricity load in PJM remained the same from 2010 to 2022.** 
 **Alternative hypothesis: Electricity load in PJM has changed from 2010 to 2022.**
 
@@ -393,16 +409,78 @@ PJM_load_monthly_ts <- ts(
 monthly_decomposed_PJM <- stl(PJM_load_monthly_ts, s.window="periodic")
 plot(monthly_decomposed_PJM)
 ```
+```{r PJM TEST,  echo = FALSE, warning = FALSE, message = FALSE,include = FALSE}
+monthly_load_trend_PJM <- Kendall::SeasonalMannKendall(PJM_load_monthly_ts)
+summary(monthly_load_trend_PJM)
+```
+
+```{r PJM DESEASON TEST,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
+# Extract seasonal component from the time series 
+
+monthly_decomposed_components_PJM <- as.data.frame(monthly_decomposed_PJM$time.series[,1:3])
+
+monthly_decomposed_deseasoned_PJM <- 
+  PJM_load_monthly_ts-monthly_decomposed_components_PJM$seasonal
+
+# Run the Mann Kendall test on the non-seasonal data
+
+monthly_load_trend_deseason_PJM <- Kendall::MannKendall(monthly_decomposed_deseasoned_PJM)
+summary(monthly_load_trend_deseason_PJM)
+```
 
 ## 4.2 Growth Analysis
 
 We calculated the annual load growth rate from 2010 to 2022 for ERCOT and PJM to understand if the electricity load has grown at the same rate across the two markets.
 
-```{r Annual Growth ERCOT, echo = FALSE, warning = FALSE, message = FALSE}
+```{r Annual Growth ERCOT, echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
+# Aggregate data by year
+ercot_load_annual <- ercot_load %>%
+  mutate(
+    Year = year(Hour_Ending)) %>%
+  group_by(Year) %>%
+  summarise(
+    Mean_Load = mean(ERCOT, na.rm = TRUE)
+  )
+
+ercot_load_annual
+
+# Remove year 2023 as it is incomplete
+ercot_load_annual <- subset(ercot_load_annual, Year != "N/A")
+ercot_load_annual
+
+# Calculate annual rate of growth 
+
+ercot_load_annual <- ercot_load_annual %>%
+  mutate(Growth_Rate_Percent= (Mean_Load / lag(Mean_Load) - 1) * 100)
+
+ercot_load_annual
+
+# Calculate total average annual load growth 
+total_mean_growth <- mean(ercot_load_annual$Growth_Rate_Percent, na.rm = TRUE)
+total_mean_growth  
 ```
 
 
-```{r Annual Growth PJM, echo = FALSE, warning = FALSE, message = FALSE}
+```{r Annual Growth PJM, echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
+# Aggregate data by year
+pjm_load_annual <- PJM_load %>%
+  mutate(
+    Year = year(Date)) %>%
+  group_by(Year) %>%
+  summarise(
+    Mean_Load = mean(Load_MW, na.rm = TRUE)
+  )
+
+pjm_load_annual
+
+pjm_load_annual <- pjm_load_annual %>%
+  mutate(Growth_Rate_Percent= (Mean_Load / lag(Mean_Load) - 1) * 100)
+
+pjm_load_annual
+
+# Calculate total average annual load growth 
+total_mean_growth <- mean(pjm_load_annual$Growth_Rate_Percent, na.rm = TRUE)
+total_mean_growth 
 ```
 
 While ERCOT load shows relatively constant growth each year, the PJM load growth rate displays fluctuation. One thing in common is that both markets experienced a decrease in the load in 2020; the load in ERCOT and PJM have dropped by 0.81% and 4.06% respectively in 2020. This can be explained by the COVID-19 pandemic which paused a lot of social and economic activities. What’s interesting is the opposite direction of load change in 2012; whereas PJM load has increased by 5.33% which is the maximum growth rate for PJM between 2010 and 2022, ERCOT load has decreased by 2.96% in 2012 from the year before. ERCOT observes the maximum growth rate in 2022, increasing by 9.47% from 2021. Overall, the total average annual growth rate is 2.58% for ERCOT and 0.96% for PJM. Hence, ERCOT has experienced more growth in electricity load from 2010 to 2022 than PJM has. 
@@ -530,6 +608,16 @@ ggplot(rt_load, aes(x= Price, y= Load_MW)) +
   labs(x= "Price ($)", y = "Load (MW/h)") 
 ```
 
+```{r,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
+#Regression
+rt.regression <- lm(data = rt_load, Load_MW ~ Price)
+summary(rt.regression)
+
+#Correlation
+cor.test(rt_load$Price, rt_load$Load_MW)
+```
+
+
 \centering Table : PJM Real-Time Linear Regression Values \centering
 
 |   P-Value      |     Tau Value  |        R-Squared   |     Coefficient      |
@@ -547,6 +635,14 @@ ggplot(dasr_load, aes(x= Price, y= Load_MW)) +
   labs(x= "Price ($)", y = "Load (MW/h)")
 ```
 
+```{r,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
+#Regression
+dasr.regression <- lm(data = dasr_load, Load_MW ~ Price)
+summary(dasr.regression)
+
+#Correlation
+cor.test(dasr_load$Price, dasr_load$Load_MW)
+```
 \centering Table : PJM Day-Ahead Linear Regression Values \centering
 
 |   P-Value      |     Tau Value  |        R-Squared   |     Coefficient      |
@@ -578,6 +674,22 @@ ercot_linear_model_data_totprice <- ercot_linear_model_data %>%
 **HYPOTHESIS**
 
 To begin the Multiple Linear Regression analysis for ERCOT, we used Akaike’s Information Criterion (AIC) to determine which explanatory variables should be used to prevent over fitting of the data. Table X outlines the results of this test. The lowest AIC value achieved was 173.58 with the average bill price and percent renewables as the chosen variables. This result can be confirmed by observing the correlation plot for the explanatory variables (Figure X).
+
+```{r,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
+ercot.total <- lm(data = ercot_linear_model_data_totprice, 
+                       Mean_Load ~ average_price_tot + population + percent_renew +
+                        med_income + percent_minority)
+
+summary(ercot.total)
+```
+
+```{r ERCOT AIC,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
+ercot.AIC.total <- lm(data = ercot_linear_model_data_totprice, 
+                       Mean_Load ~ average_price_tot + population + percent_renew +
+                        med_income + percent_minority)
+
+step(ercot.AIC.total)
+```
  
 \centering Table : ERCOT Multiple Regression AIC Values \centering 
 
@@ -598,7 +710,13 @@ The multiple linear regression using average bill price and percent renewables a
 
 We can also conclude that for every $1 increase in average bill price, there is a 1976.77 MWh increase in average daily load. Upon reflection, this last interpretation should likely have its causation reversed; instead, for every 1976.77 MWh added to the average daily load, there is a $1 increase in average bill price. This would make more sense because as load increases, more expensive generating plants need to be utilized, causing utility companies to have to charge higher rates to make a profit.
 
+```{r ERCOT Regression Summary,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
+ercot.totalavg.regression <- lm(data = ercot_linear_model_data_totprice, 
+                       Mean_Load ~ average_price_tot + percent_renew)
 
+summary(ercot.totalavg.regression)
+
+```
 \centering Table : ERCOT Multiple Regression P-Values \centering
 
 |        Variable            |           Coefficients     |             P-Value       |
