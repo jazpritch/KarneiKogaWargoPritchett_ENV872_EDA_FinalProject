@@ -239,7 +239,7 @@ The ERCOT website provides historical hourly data which contains the net energy 
 To analyze what factors contribute to load in ERCOT over time, we compiled various demographic variables as well as other important energy system variables: average energy bill price (cents/kWh), percentage renewable generation, total population, percent minority population, and median income. For our analysis, we assume that Texas and ERCOT are similar enough to be equated. This is important to note because ERCOT does not technically encompass the entire state. Still, many variables considered here have much more robust and easily accessible data for Texas than the ERCOT service area.
 
 The Energy Information Administration (EIA) provided the average Texas energy bill prices for each year in our scope, broken down by consumption sector (residential, commercial, industrial, and transportation) and averaged across each. Because the total average is a function of the average prices for each sector, we chose to exclude the breakdowns and just use the total average to avoid multicollinearity. The percentage of renewable generation in Texas for the years 2010-2022 was calculated using the Net Generation 1990-2022 report provided by the EIA. The calculation took the sum of solar, wind, and hydroelectric generation divided by the total generation to get the portion of renewable generation for each year of interest. Population and percent minority were provided through the United States Census Bureau Historical population data taken for the years 2010-2022. Percent minority was calculated by taking "white only" percentages from the census survey and subtracting them from the total population. Median household income was taken from the Federal Reserve Economic Data (FRED) platform and is stated as being estimates based on linear interpolation that follows the Census Bureau's methodology.
-
+\newpage
 \centering Table 5: ERCOT Linear Model Demographic Data \centering
 
 | **Detail**         | **Description**                                                                                                                             |
@@ -247,14 +247,12 @@ The Energy Information Administration (EIA) provided the average Texas energy bi
 | Year:              | 2010 - 2022                                                                                                                                 |
 | Electricity Price: | Average prices of electricity to ultimate customers (<https://www.eia.gov/totalenergy/data/monthly/pdf/sec9_11.pdf>)                        |
 | Median Income:     | Income level at which half of the households in Texas earn more and half earn less (<https://fred.stlouisfed.org/series/MEHOINUSTXA672N#> ) |
-| Percent Renewable: |                                                                                                                                             |
+| Percent Renewable: | Net Generation by State by Type of Producer by Energy Source(<https://www.eia.gov/electricity/data/state/annual_generation_state.xls>) |
 | Percent Minority:  | Subtraction of white only percentages after dividing white popultion from totals (U.S. Census 2010-2022)                                    |
 | Population:        | Total Population each year for Texas (<https://www.census.gov/programs-surveys/popest/data/data-sets.html>)                                 |
 | Mean Load:         | Average load for ERCOT                                                                                                                      |
 
 \raggedright
-
-\newpage
 
 # 3. Exploratory Analysis of Data
 
@@ -497,7 +495,7 @@ While ERCOT load shows relatively constant growth each year, the PJM load growth
 
 **The null hypothesis: There is no effect of LMP on electricity load in PJM from 2010 and 2013 to 2022.** **Alternative hypothesis: LMP has an effect on electricity load in PJM from 2010 and 2013 to 2022.**
 
-The analysis of load growth is influenced by various factors, including those related to demand, energy-efficient technology, and energy consumption across different sectors along with market dynamics and policy regulation. Linear regression was conducted to model the relationship between price and both real-time (Figure X) and day-ahead load (Figure X). The factor of price was selected due to it's accessibility given the cover area of PJM spanning over multiple states compared to the sole state coverage of Texas that ERCOT has. Based on the analysis of load in comparison to price, results show that growth is influenced by a diverse set of variables beyond price.
+The analysis of load growth is influenced by various factors, including those related to demand, energy-efficient technology, and energy consumption across different sectors along with market dynamics and policy regulation. Linear regression was conducted to model the relationship between price and both real-time (Figure 5) and day-ahead load (Figure 6). The factor of price was selected due to it's accessibility given the cover area of PJM spanning over multiple states compared to the sole state coverage of Texas that ERCOT has. Based on the analysis of load in comparison to price, results show that growth is influenced by a diverse set of variables beyond price.
 
 ```{r Load in price data Real-time,  echo = FALSE, warning = FALSE, message = FALSE}
 
@@ -611,7 +609,7 @@ ggplot(rt_load, aes(x= Price, y= Load_MW)) +
   geom_point() + 
   geom_smooth(method = "lm", se = FALSE) + 
   ggtitle('Real-Time LMP Effect on Load in PJM from 2010 to 2022') +
-  labs(x= "Price ($)", y = "Load (MW/h)") 
+  labs(subtitle = "Figure 6", x= "Price ($)", y = "Load (MW/h)") 
 ```
 
 ```{r,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
@@ -638,7 +636,7 @@ ggplot(dasr_load, aes(x= Price, y= Load_MW)) +
   geom_point() + 
   geom_smooth(method = "lm", se = FALSE) + 
   ggtitle('Day-Ahead LMP Effect on Load in PJM from 2013 to 2022') +
-  labs(x= "Price ($)", y = "Load (MW/h)")
+  labs(subtitle = "Figure 7", x= "Price ($)", y = "Load (MW/h)")
 ```
 
 ```{r,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
@@ -658,7 +656,7 @@ cor.test(dasr_load$Price, dasr_load$Load_MW)
 
 \raggedright
 
-The linear regression model and correlation test were conducted using day-ahead data for PJM. The results indicate a statistically significant relationship between price and load based on the low p-value, significant tau value, and positive correlation coefficient. However, the low r-squared value suggests that only a small variance in load is explained by price showing other factors are important.
+The linear regression model and correlation test were conducted using day-ahead data for PJM. The results indicate a statistically significant relationship between price and load based on the low p-value (p-value < 0.0001), significant tau value (65.224), and negative correlation coefficient. However, the low r-squared value (0.0367) suggests that only a small variance in load is explained by price, showing other factors are important.
 
 ## 4.4 Multiple Linear Regression of ERCOT
 
@@ -679,9 +677,9 @@ ercot_linear_model_data_totprice <- ercot_linear_model_data %>%
 
 ```
 
-**HYPOTHESIS**
+**The null hypothesis: There are no relationships between the dependent variables (population, percent minority population, median income, percent renewables, and average bill price) and the response variable (average electricity load) in ERCOT.** **Alternative hypothesis: There is at least one relationship between the dependent variables (population, percent minority population, median income, percent renewables, and average bill price) and the response variable (average electricity load) in ERCOT.**
 
-To begin the Multiple Linear Regression analysis for ERCOT, we used Akaike's Information Criterion (AIC) to determine which explanatory variables should be used to prevent over fitting of the data. Table X outlines the results of this test. The lowest AIC value achieved was 173.58 with the average bill price and percent renewables as the chosen variables. This result can be confirmed by observing the correlation plot for the explanatory variables (Figure X).
+To begin the Multiple Linear Regression analysis for ERCOT, we used Akaike's Information Criterion (AIC) to determine which explanatory variables should be used to prevent over fitting of the data. Table 8 outlines the results of this test. The lowest AIC value achieved was 173.58 with the average bill price and percent renewables as the chosen variables.
 
 ```{r,  echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
 ercot.total <- lm(data = ercot_linear_model_data_totprice, 
@@ -699,7 +697,7 @@ ercot.AIC.total <- lm(data = ercot_linear_model_data_totprice,
 step(ercot.AIC.total)
 ```
 
-\centering Table 7: ERCOT Multiple Regression AIC Values \centering
+\centering Table 8: ERCOT Multiple Regression AIC Values \centering
 
 | Variables                                                              | AIC Value |
 |-------------------------------------------------------|-----------------|
@@ -710,12 +708,12 @@ step(ercot.AIC.total)
 
 \raggedright
 
-```{r Corr Plot, echo = FALSE, warning = FALSE, message = FALSE}
+```{r Corr Plot, echo = FALSE, warning = FALSE, message = FALSE, include = FALSE}
 ercot.tot.Corr <- cor(ercot_linear_model_data_totprice)
-corrplot(ercot.tot.Corr, method = 'ellipse', title = "Figure 6")
+corrplot(ercot.tot.Corr, method = 'ellipse')
 ```
 
-The multiple linear regression using average bill price and percent renewables as the explanatory variables for mean load in ERCOT has an adjusted R2 value of 0.9616, meaning that 96.16% of the variance in average daily load can be explained by the explanatory variables. The p-value of this regression also indicates that the results of this model are statistically significant (p \< 0.001, df = 10, F = 151.1). Table X shows the results of this regression. Assuming an alpha of 0.05, all variables are statistically significant, with percent renewables having the strongest significance with a p-value of 0.0001. For every 1% increase in renewable generation, there is a 358.75 MWh increase in average daily load. This is an interesting conclusion with no definitive explanation. It may have to do with the psychology around using more of a resource because it has a lower impact on the environment; for example, if someone has a solar heating system, they may take hot showers for longer because they feel that their energy consumption is cleaner. It could also be more of a technological advancement correlation since society is consuming more energy as we advance, and advancements in technology have resulted in more renewable energy to be captured (bigger wind turbines, more efficient solar panels, etc.) Overall, this finding warrants more study into this particular area.
+The multiple linear regression using average bill price and percent renewables as the explanatory variables for mean load in ERCOT has an adjusted R2 value of 0.9616, meaning that 96.16% of the variance in average daily load can be explained by the explanatory variables. The p-value of this regression also indicates that the results of this model are statistically significant (p \< 0.001, df = 10, F = 151.1). Table 9 shows the results of this regression. Assuming an alpha of 0.05, all variables are statistically significant, with percent renewables having the strongest significance with a p-value of 0.0001. For every 1% increase in renewable generation, there is a 358.75 MWh increase in average daily load. This is an interesting conclusion with no definitive explanation. It may have to do with the psychology around using more of a resource because it has a lower impact on the environment; for example, if someone has a solar heating system, they may take hot showers for longer because they feel that their energy consumption is cleaner. It could also be more of a technological advancement correlation since society is consuming more energy as we advance, and advancements in technology have resulted in more renewable energy to be captured (bigger wind turbines, more efficient solar panels, etc.) Overall, this finding warrants more study into this particular area.
 
 We can also conclude that for every \$1 increase in average bill price, there is a 1976.77 MWh increase in average daily load. Upon reflection, this last interpretation should likely have its causation reversed; instead, for every 1976.77 MWh added to the average daily load, there is a \$1 increase in average bill price. This would make more sense because as load increases, more expensive generating plants need to be utilized, causing utility companies to have to charge higher rates to make a profit.
 
@@ -727,7 +725,7 @@ summary(ercot.totalavg.regression)
 
 ```
 
-\centering Table 8: ERCOT Multiple Regression P-Values \centering
+\centering Table 9: ERCOT Multiple Regression P-Values \centering
 
 | Variable      | Coefficients | P-Value |
 |:--------------|--------------|---------|
@@ -737,7 +735,7 @@ summary(ercot.totalavg.regression)
 
 \raggedright
 
-Figure 7 shows the residuals vs. fitted values, and Figure 8 shows the Q-Q residuals. These plots demonstrate the goodness of fit of the model. The residuals vs. fitted plot shows the distance of the residuals from the line of fit; it is important to ensure that these values are symmetric for a good fit, and this is the case with our model. The Q-Q plot points should stay close to the 1:1 line, and this is mostly true with our model as well, with some diversions towards the end with points 9 and 10.
+Figure 8 shows the residuals vs. fitted values, and Figure 9 shows the Q-Q residuals. These plots demonstrate the goodness of fit of the model. The residuals vs. fitted plot shows the distance of the residuals from the line of fit; it is important to ensure that these values are symmetric for a good fit, and this is the case with our model. The Q-Q plot points should stay close to the 1:1 line, and this is mostly true with our model as well, with some diversions towards the end with points 9 and 10.
 
 ```{r Residuals v. Fitted Plot, echo = FALSE, warning = FALSE, message = FALSE}
 #Regression Summary
@@ -745,11 +743,11 @@ ercot.totalavg.regression <- lm(data = ercot_linear_model_data_totprice,
                        Mean_Load ~ average_price_tot + percent_renew)
 
 #Plot
-plot(ercot.totalavg.regression, which=1, main = "Figure 7")
+plot(ercot.totalavg.regression, which=1, main = "Figure 8")
 ```
 
 ```{r Q-Q Plot, echo = FALSE, warning = FALSE, message = FALSE}
-plot(ercot.totalavg.regression, which=2, main = "Figure 8")
+plot(ercot.totalavg.regression, which=2, main = "Figure 9")
 ```
 
 # 5. Summary and Conclusions
