@@ -31,6 +31,126 @@ mytheme <- theme_gray()+
 theme_set(mytheme)
 ```
 
+```{r ERCOT, include=FALSE}
+# Read the CSV files
+x2010<- read_excel("Data/Raw/ERCOT_Source_Data/2010_ercot_hourly_load_data.xls") %>% 
+  rename(Hour_Ending = Hour_End) %>%
+  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
+x2011<- read_excel("Data/Raw/ERCOT_Source_Data/2011_ercot_hourly_load_data.xls") %>% 
+  rename(Hour_Ending = Hour_End) %>%
+  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
+x2012<- read_excel("Data/Raw/ERCOT_Source_Data/2012_ercot_hourly_load_data.xls") %>% 
+  rename(Hour_Ending = Hour_End) %>%
+  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
+x2013<- read_excel("Data/Raw/ERCOT_Source_Data/2013_ercot_hourly_load_data.xls") %>% 
+  rename(Hour_Ending = Hour_End) %>%
+  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
+x2014<- read_excel("Data/Raw/ERCOT_Source_Data/2014_ercot_hourly_load_data.xls") %>% 
+  rename(Hour_Ending = Hour_End) %>%
+  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
+x2015<- read_excel("Data/Raw/ERCOT_Source_Data/native_load_2015.xls") %>% 
+  rename(Hour_Ending = Hour_End) %>%
+  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
+x2016<- read_excel("Data/Raw/ERCOT_Source_Data/native_Load_2016.xlsx") %>% 
+  rename(Hour_Ending = Hour_End) %>%
+  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
+x2017<- read_excel("Data/Raw/ERCOT_Source_Data/native_Load_2017.xlsx") %>% 
+  rename(Hour_Ending = "Hour Ending") %>%
+  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
+x2018<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2018.xlsx") %>% 
+  rename(Hour_Ending = "HourEnding") %>%
+  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
+x2019<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2019.xlsx") %>% 
+  rename(Hour_Ending = "HourEnding") %>%
+  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
+x2020<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2020.xlsx") %>% 
+  rename(Hour_Ending = "HourEnding") %>%
+  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
+x2021<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2021.xlsx") %>% 
+  rename(Hour_Ending = "Hour Ending") %>%
+  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
+x2022<- read_excel("Data/Raw/ERCOT_Source_Data/Native_Load_2022.xlsx") %>% 
+  rename(Hour_Ending = "Hour Ending") %>%
+  mutate(Hour_Ending = as.Date(Hour_Ending, format = "%m/%d/%Y"))
+
+# Merge the data frames based on a common column
+ercot <- bind_rows(x2010, x2011, x2012, x2013, x2014, x2015, x2016, x2017, x2018, x2019, x2020, x2021, x2022)
+
+ercot_load <- ercot %>%
+  select(Hour_Ending,ERCOT)
+```
+
+```{r load data PJM, include=FALSE}
+# Read the CSV files
+PJM_2010<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2010.csv") %>% 
+  rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2010 <- PJM_2010[, c(2, 7)]
+
+PJM_2011<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2011.csv") %>% 
+  rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2011 <- PJM_2011[, c(2, 7)]
+
+PJM_2012<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2012.csv") %>% 
+  rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2012 <- PJM_2012[, c(2, 7)]
+
+PJM_2013<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2013.csv") %>% 
+  rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2013 <- PJM_2013[, c(2, 7)]
+
+PJM_2014<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2014.csv") %>% 
+  rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2014 <- PJM_2014[, c(2, 7)]
+
+PJM_2015<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2015.csv") %>% 
+  rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2015 <- PJM_2015[, c(2, 7)]
+
+PJM_2016<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2016.csv") %>% 
+  rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2016 <- PJM_2016[, c(2, 7)]
+
+PJM_2017<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2017.csv") %>% 
+  rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2017 <- PJM_2017[, c(2, 7)]
+
+PJM_2018<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2018.csv") %>% 
+  rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2018 <- PJM_2018[, c(2, 7)]
+
+PJM_2019<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2019.csv") %>% 
+  rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2019 <- PJM_2019[, c(2, 7)]
+
+PJM_2020<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2020.csv") %>% 
+  rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2020 <- PJM_2020[, c(2, 7)]
+
+PJM_2021<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2021.csv") %>% 
+  rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2021 <- PJM_2021[, c(2, 7)]
+
+PJM_2022<- read_csv("Data/Raw/PJM_Source_Data/PJM_MeteredHourlyLoad_2022.csv") %>% 
+  rename(Date = datetime_beginning_ept, Load_MW = mw) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+PJM_2022 <- PJM_2022[, c(2, 7)]
+
+#Merge the data frames based on a common column
+PJM_load <- bind_rows(PJM_2010, PJM_2011, PJM_2012, PJM_2013, PJM_2014, PJM_2015, PJM_2016, PJM_2017, PJM_2018, PJM_2019, PJM_2020, PJM_2021, PJM_2022)
+```
+
 # Github Repository 
 
 https://github.com/jazpritch/KarneiKogaWargoPritchett_ENV872_EDA_FinalProject
@@ -67,7 +187,7 @@ The PJM website provides metered hourly data which contain the net energy in meg
 |Retrieved From:|https://dataminer2.pjm.com/feed/hrl_load_metered/definition | 
 |Variables Used:|datetime_beginning_ept(Date), mw (Load_MW)                  | 
 |Date Range:    |1/1/2010 - 12/31/2022|
-\reaggedright
+\raggedright
 
 
 ## 2.2 PJM Price Data
@@ -131,71 +251,283 @@ The Energy Information Administration (EIA) provided the average Texas energy bi
 
 \newpage
 
+
+
 # 3. Exploratory Analysis of Data
 
 Figure X illustrates the distribution of electricity load between ERCOT and PJM for the years 2010-2022. The vertically flat box plot of ERCOT indicates low variability in the data, reflecting its role as an independent operator in Texas. In contrast, the wider spread of data in the PJM boxplot is consistent with its regional coverage over multiple states. The box plots provide a visual summary of load distribution, highlighting the differences in variability between the two operators, which can be attributed to their operational coverage and help determine load growth. 
 
-```{r Load Distribution Boxplot}
-
+```{r Load Distribution Boxplot, echo = FALSE, warning = FALSE, message = FALSE}
+boxplot(ercot_load, PJM_load, names = c("ERCOT", "PJM"), xlab = "Operator", ylab = "Load (MW)", main = "Electricity Load Distribution in ERCOT v. PJM 2010-2022" , par(font.main = 1))
 ```
 
+Figure X and Figure X show the monthly electricity load from 2010 to 2022 with a trend line over time in PJM and ERCOT, respectively. The trend lines in both figures seem to be increasing over time, which have been statistically tested below. 
 
-## 3.1 Exploration of ERCOT
+```{r Monthly Load Plot ERCOT, echo = FALSE, warning = FALSE, message = FALSE}
+#Aggregrate by month 
+ercot_load_monthly <- ercot_load %>%
+  mutate(
+    Year = year(Hour_Ending),
+    Month = month(Hour_Ending)
+  ) %>%
+  group_by(Year, Month) %>%
+  summarise(
+    Mean_Load = mean(ERCOT, na.rm = TRUE)
+  )
 
-```{r Hourly Load Plot ERCOT}
+ercot_load_monthly$NewDate <- 
+  as.Date(paste(ercot_load_monthly$Year, ercot_load_monthly$Month, "01", sep = "-")) 
 
+#Plot
+graph1 <- ggplot(ercot_load_monthly, aes(x = NewDate, y = Mean_Load)) +
+  geom_line(color = "blue") +
+  geom_smooth(method = "lm") +
+  ggtitle('Monthly Electricity Load in ERCOT from 2010 to 2022') + 
+  labs(x = "Year", y = "Average Monhtly Load (MW)")
+
+graph1
 ```
 
-```{r Monthly Load Plot ERCOT}
+```{r Monthly Load Plot PJM, echo = FALSE, warning = FALSE, message = FALSE}
+#Aggregate by month
+PJM_load_monthly <- PJM_load %>%
+  mutate(
+    Year = year(Date),
+    Month = month(Date)
+  ) %>%
+  group_by(Year, Month) %>%
+  summarise(
+    Mean_Load = mean(Load_MW, na.rm = TRUE)
+  )
 
-```
+PJM_load_monthly$NewDate <- 
+  as.Date(paste(PJM_load_monthly$Year, PJM_load_monthly$Month, "01", sep = "-"))
 
-## 3.2 Exploration of PJM
+#Plot 
+PJMgraph_month<- ggplot(PJM_load_monthly, aes(x = NewDate, y = Mean_Load)) +
+  geom_line(color = "black") +
+  geom_smooth(method = "lm") +
+  ggtitle('Monthly Electricity Load in PJM from 2010 to 2022') + 
+  labs(x = "Year", y = "Average Monhtly Load (MW)")
 
-```{r Hourly Load Plot PJM}
-
-```
-
-```{r Monthly Load Plot PJM}
-
+PJMgraph_month
 ```
 
 # 4. Analysis 
+
 ## 4.1 Time Series Analysis 
 
-**HYPOTHESIS**
+Time series objects were created for the average monthly load data for PJM and ERCOT and were subsequently decomposed into seasonal, trend, and remainder components (Figure X, Figure X). The seasonal Mann-Kendall test was applied to test the null hypothesis that the increasing trend in the PJM and ERCOT monthly load data is not statistically significant. The test results indicate that there is a statistically significant increasing trend in the PJM electricity load from 2010 to 2022 with its positive score of 82902071 and tau of 0.068. A p-value smaller than 0.05 allowed us to reject the null hypothesis. Similarly, the results of the seasonal Mann-Kendall test for the ERCOT data showed a statistically significant increase in load over time (tau=0.341, score=361963, p<0.05).  Therefore, we were able to conclude that average monthly electricity demand has grown over time in both energy markets.
 
+In the next step, we extracted the seasonal components from the time series objects to determine the load changes over time without seasonality impacts. The Mann-Kendall test on the non-seasonal data allowed us to reject the null hypothesis for the PJM and ERCOT data (p-value <0.05), which pointed to a statistically significant increasing trend. Hence, we were able to confidently conclude that PJM load and ERCOT load have changed from 2010 to 2022 without seasonality components. 
+
+**The null hypothesis: Electricity load in ERCOT remained the same from 2010 to 2022.** 
+**Alternative hypothesis: Electricity load in ERCOT has changed from 2010 to 2022.**
+
+```{r ERCOT Monthly Decomposed Plot, echo = FALSE, warning = FALSE, message = FALSE}
+#Aggregate data by day 
+ercot_load_daily<- ercot_load %>%
+  mutate(
+    Year = year(Hour_Ending),
+    Month = month(Hour_Ending),
+    Day = day (Hour_Ending)
+  ) %>%
+  group_by(Year, Month, Day) %>%
+  summarise(
+    Mean_Load = mean(ERCOT, na.rm = TRUE)
+  )
+
+ercot_load_daily$NewDate <- 
+  as.Date(paste(ercot_load_daily$Year, ercot_load_daily$Month,ercot_load_daily$Day, sep = "-"))
+
+#Aggregate data by year
+ercot_load_yearly <- ercot_load %>%
+  mutate(
+    year = year(Hour_Ending)
+  ) %>%
+  group_by(year) %>%
+  summarise(
+    Mean_Load = mean(ERCOT, na.rm = TRUE)
+  ) %>% 
+  drop_na()
+
+#Dataframe
+ercot_load_monthly_ts <- ts(
+  ercot_load_daily$Mean_Load,
+  start = c(2010,1),
+  frequency = 12
+)
+
+#Plot
+monthly_decomposed <- stl(ercot_load_monthly_ts, s.window="periodic")
+plot(monthly_decomposed)
+
+```
+**The null hypothesis: Electricity load in PJM remained the same from 2010 to 2022.** 
+**Alternative hypothesis: Electricity load in PJM has changed from 2010 to 2022.**
+
+```{r PJM Monthly Decomposed Plot, echo = FALSE, warning = FALSE, message = FALSE}
+#Aggregate data by day 
+PJM_load_daily<- PJM_load %>%
+  mutate(
+    Year = year(Date),
+    Month = month(Date),
+    Day = day(Date)
+  ) %>%
+  group_by(Year, Month, Day) %>%
+  summarise(
+    Mean_Load = mean(Load_MW, na.rm = TRUE)
+  )
+
+PJM_load_daily$NewDate <- 
+  as.Date(paste(PJM_load_daily$Year, PJM_load_daily$Month,PJM_load_daily$Day, sep = "-"))
+
+#Dataframe
+PJM_load_monthly_ts <- ts(
+  PJM_load_daily$Mean_Load,
+  start = c(2010,1),
+  frequency = 12
+)
+
+#Plot
+monthly_decomposed_PJM <- stl(PJM_load_monthly_ts, s.window="periodic")
+plot(monthly_decomposed_PJM)
+```
 
 ## 4.2 Growth Analysis
 
-```{r Annual Growth ERCOT}
-```
-
-
-```{r Total Growth ERCOT}
-```
-
-
-```{r Annual Growth PJM}
-```
-
-
-```{r Total Growth PJM}
-```
-
-
 We calculated the annual load growth rate from 2010 to 2022 for ERCOT and PJM to understand if the electricity load has grown at the same rate across the two markets.
+
+```{r Annual Growth ERCOT, echo = FALSE, warning = FALSE, message = FALSE}
+```
+
+
+```{r Annual Growth PJM, echo = FALSE, warning = FALSE, message = FALSE}
+```
+
 While ERCOT load shows relatively constant growth each year, the PJM load growth rate displays fluctuation. One thing in common is that both markets experienced a decrease in the load in 2020; the load in ERCOT and PJM have dropped by 0.81% and 4.06% respectively in 2020. This can be explained by the COVID-19 pandemic which paused a lot of social and economic activities. What’s interesting is the opposite direction of load change in 2012; whereas PJM load has increased by 5.33% which is the maximum growth rate for PJM between 2010 and 2022, ERCOT load has decreased by 2.96% in 2012 from the year before. ERCOT observes the maximum growth rate in 2022, increasing by 9.47% from 2021. Overall, the total average annual growth rate is 2.58% for ERCOT and 0.96% for PJM. Hence, ERCOT has experienced more growth in electricity load from 2010 to 2022 than PJM has. 
 
 
 ## 4.3 Simple Linear Regression of PJM
 
-**HYPOTHESIS**
+**The null hypothesis: There is no effect of LMP on electricity load in PJM from 2010 and 2013 to 2022.** 
+**Alternative hypothesis: LMP has an effect on electricity load in PJM from 2010 and 2013 to 2022.**
 
-The analysis of load growth is influenced by various factors, including those related to demand, energy-efficient technology, and energy consumption across different sectors along with market dynamics and policy regulation. Linear regression was conducted to model the relationship between price and both real-time (Figure X) and day-ahead load (Figure X). Based on the analysis of load in comparison to price, results show that growth is influenced by a diverse set of variables beyond price.
+The analysis of load growth is influenced by various factors, including those related to demand, energy-efficient technology, and energy consumption across different sectors along with market dynamics and policy regulation. Linear regression was conducted to model the relationship between price and both real-time (Figure X) and day-ahead load (Figure X). The factor of price was selected due to it's accessibility given the cover area of PJM spanning over multiple states compared to the sole state coverage of Texas that ERCOT has. Based on the analysis of load in comparison to price, results show that growth is influenced by a diverse set of variables beyond price.
 
-```{r Linear Regression PJM Real-Time}
+```{r Load in price data Real-time,  echo = FALSE, warning = FALSE, message = FALSE}
 
+# Read the CSV files
+rt_2013<- read_csv("Data/Raw/PJM_Source_Data/rt_2013.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+rt_2014<- read_csv("Data/Raw/PJM_Source_Data/rt_2014.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+rt_2015<- read_csv("Data/Raw/PJM_Source_Data/rt_2015.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+rt_2016<- read_csv("Data/Raw/PJM_Source_Data/rt_2016.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+rt_2017<- read_csv("Data/Raw/PJM_Source_Data/rt_2017.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+rt_2018<- read_csv("Data/Raw/PJM_Source_Data/rt_2018.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+rt_2019<- read_csv("Data/Raw/PJM_Source_Data/rt_2019.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+rt_2020<- read_csv("Data/Raw/PJM_Source_Data/rt_2020.csv")%>% 
+  rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+rt_2021<- read_csv("Data/Raw/PJM_Source_Data/rt_2021.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+rt_2022<- read_csv("Data/Raw/PJM_Source_Data/rt_2022.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = rmpcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+
+#Merge the data frames based on a common column
+rt_load <- bind_rows(rt_2013, rt_2014, rt_2015, rt_2016, rt_2017, rt_2018, rt_2019, rt_2020, rt_2021, PJM_2022)
+```
+
+```{r Load in price data Day-ahead,  echo = FALSE, warning = FALSE, message = FALSE}
+# Read the CSV files
+dasr_2010<- read_csv("Data/Raw/PJM_Source_Data/dasr_2010.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+dasr_2011<- read_csv("Data/Raw/PJM_Source_Data/dasr_2011.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+dasr_2012<- read_csv("Data/Raw/PJM_Source_Data/dasr_2012.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+dasr_2013<- read_csv("Data/Raw/PJM_Source_Data/dasr_2013.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+dasr_2014<- read_csv("Data/Raw/PJM_Source_Data/dasr_2014.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+dasr_2015<- read_csv("Data/Raw/PJM_Source_Data/dasr_2015.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+dasr_2016<- read_csv("Data/Raw/PJM_Source_Data/dasr_2016.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+dasr_2017<- read_csv("Data/Raw/PJM_Source_Data/dasr_2017.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+dasr_2018<- read_csv("Data/Raw/PJM_Source_Data/dasr_2018.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+dasr_2019<- read_csv("Data/Raw/PJM_Source_Data/dasr_2019.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+dasr_2020<- read_csv("Data/Raw/PJM_Source_Data/dasr_2020.csv")%>% 
+  rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+dasr_2021<- read_csv("Data/Raw/PJM_Source_Data/dasr_2021.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+dasr_2022<- read_csv("Data/Raw/PJM_Source_Data/dasr_2022.csv") %>% 
+  rename(Date = datetime_beginning_ept, Price = dasrmcp, Load_MW = total_pjm_rt_load_mwh) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%Y"))
+
+
+#Merge the data frames based on a common column
+dasr_load <- bind_rows(dasr_2010, dasr_2011, dasr_2012, dasr_2013, dasr_2014, dasr_2015, dasr_2016, dasr_2017, dasr_2018, dasr_2019, dasr_2020, dasr_2021, dasr_2022)
+```
+
+```{r Linear Regression PJM Real-Time, echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(rt_load, aes(x= Price, y= Load_MW)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  ggtitle('Real-Time LMP Effect on Load in PJM from 2010 to 2022') +
+  labs(x= "Price ($)", y = "Load (MW/h)") 
 ```
 
 \centering Table : PJM Real-Time Linear Regression Values \centering
@@ -207,8 +539,12 @@ The analysis of load growth is influenced by various factors, including those re
 
 The results of the linear regression model and correlation test using real-time data for PJM indicate a statistically significant relationship between price and load based on the low p-value and significant tau value. However, the low r-squared value and small correlation coefficient show that only a small variance in load is explained by price showing other factors are important. 
 
-```{r Linear Regression PJM Day- Ahead}
-
+```{r Linear Regression PJM Day- Ahead, echo = FALSE, warning = FALSE, message = FALSE}
+ggplot(dasr_load, aes(x= Price, y= Load_MW)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  ggtitle('Day-Ahead LMP Effect on Load in PJM from 2013 to 2022') +
+  labs(x= "Price ($)", y = "Load (MW/h)")
 ```
 
 \centering Table : PJM Day-Ahead Linear Regression Values \centering
@@ -222,9 +558,26 @@ The linear regression model and correlation test were conducted using day-ahead 
 
 ## 4.4 Multiple Linear Regression of ERCOT
 
+```{r ERCOT Multiple Regression Data Load, echo = FALSE, warning = FALSE, message = FALSE}
+
+ercot_linear_model_data <- read.csv("Data/Raw/ERCOT_Source_Data/ERCOTLinearModelData.csv")
+ercot_linear_model_data <- left_join(ercot_linear_model_data, ercot_load_yearly) %>% drop_na()
+
+ercot_linear_model_data$percent_minority <- ercot_linear_model_data$percent_minority %>% 
+  as.numeric()
+
+ercot_linear_model_data$med_income <- as.numeric(gsub(",","",ercot_linear_model_data$med_income))
+
+ercot_linear_model_data$population <- as.numeric(gsub(",","",ercot_linear_model_data$population))
+
+ercot_linear_model_data_totprice <- ercot_linear_model_data %>% 
+  select(-c(average_price_com, average_price_ind, average_price_res))
+
+```
+
 **HYPOTHESIS**
 
-To begin this analysis, we used Akaike’s Information Criterion (AIC) to determine which explanatory variables should be used to prevent over fitting of the data. Table X outlines the results of this test. The lowest AIC value achieved was 173.58 with the average bill price and percent renewables as the chosen variables. This result can be confirmed by observing the correlation plot for the explanatory variables (Figure X).
+To begin the Multiple Linear Regression analysis for ERCOT, we used Akaike’s Information Criterion (AIC) to determine which explanatory variables should be used to prevent over fitting of the data. Table X outlines the results of this test. The lowest AIC value achieved was 173.58 with the average bill price and percent renewables as the chosen variables. This result can be confirmed by observing the correlation plot for the explanatory variables (Figure X).
  
 \centering Table : ERCOT Multiple Regression AIC Values \centering 
 
@@ -236,8 +589,9 @@ To begin this analysis, we used Akaike’s Information Criterion (AIC) to determ
 | average_price_tot + percent_renew                                      | 173.58    |
 \raggedright
 
-```{r Corr Plot}
-
+```{r Corr Plot, echo = FALSE, warning = FALSE, message = FALSE}
+ercot.tot.Corr <- cor(ercot_linear_model_data_totprice)
+corrplot(ercot.tot.Corr, method = 'ellipse')
 ```
 
 The multiple linear regression using average bill price and percent renewables as the explanatory variables for mean load in ERCOT has an adjusted R2 value of 0.9616, meaning that 96.16% of the variance in average daily load can be explained by the explanatory variables. The p-value of this regression also indicates that the results of this model are statistically significant (p < 0.001, df = 10, F = 151.1). Table X shows the results of this regression. Assuming an alpha of 0.05, all variables are statistically significant, with percent renewables having the strongest significance with a p-value of 0.0001. For every 1% increase in renewable generation, there is a 358.75 MWh increase in average daily load. This is an interesting conclusion with no definitive explanation. It may have to do with the psychology around using more of a resource because it has a lower impact on the environment; for example, if someone has a solar heating system, they may take hot showers for longer because they feel that their energy consumption is cleaner. It could also be more of a technological advancement correlation since society is consuming more energy as we advance, and advancements in technology have resulted in more renewable energy to be captured (bigger wind turbines, more efficient solar panels, etc.) Overall, this finding warrants more study into this particular area.
@@ -256,12 +610,17 @@ We can also conclude that for every $1 increase in average bill price, there is 
 
 Figure X shows the residuals vs. fitted values, and Figure X shows the Q-Q residuals. These plots demonstrate the goodness of fit of the model. The residuals vs. fitted plot shows the distance of the residuals from the line of fit; it is important to ensure that these values are symmetric for a good fit, and this is the case with our model. The Q-Q plot points should stay close to the 1:1 line, and this is mostly true with our model as well, with some diversions towards the end with points 9 and 10. 
 
-```{r Residuals v. Fitted Plot}
+```{r Residuals v. Fitted Plot, echo = FALSE, warning = FALSE, message = FALSE}
+#Regression Summary
+ercot.totalavg.regression <- lm(data = ercot_linear_model_data_totprice, 
+                       Mean_Load ~ average_price_tot + percent_renew)
 
+#Plot
+plot(ercot.totalavg.regression, which=1)
 ```
 
-```{r Q-Q Plot}
-
+```{r Q-Q Plot, echo = FALSE, warning = FALSE, message = FALSE}
+plot(ercot.totalavg.regression, which=2)
 ```
 
 # 5. Summary and Conclusions

@@ -172,7 +172,7 @@ ggplot(ercot_load, aes(x = Hour_Ending, y = ERCOT)) +
   geom_line(color = "blue") +
   geom_smooth(method = "lm") +
   ggtitle('Hourly Electricity Load in ERCOT from 2010 to 2022') + 
-  labs(x = "", y = "Load (MW)")
+  labs(x = "", y = "Load (MW)") 
 ```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
